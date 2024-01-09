@@ -1,0 +1,26 @@
+/* App.css */
+.background-image {
+    position: relative; /* Needed to position the pseudo-element */
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Ensures no scrollbars if the image is bigger than the container */
+}
+
+.background-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* Apply the blur effect */
+    filter: blur(8px);
+
+    /* Ensures the blur layer is under the content */
+    z-index: -1;
+}
