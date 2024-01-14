@@ -1518,12 +1518,24 @@ function addStyleFor(svgFilePrefix) {
                } else if (svgElement.id === 'shoulder') {
                   bodyPartName = 'shoulder';
                   infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the shoulder</h2>
-                  <p>Here is some information about the shoulder...</p>
+                  <h2>Basic Exersice for Shoulders </h2>
+                  <p>Here are 3 Exersice ...</p>
+                  <p>1)FRONT SHOULDER RAISES (3 set, 10-12 reps)</p>
                   <video controls autoplay width="100%" height="auto">
                      <source src="vids/sholder.mp4" type="video/mp4">
                      Your browser does not support the video tag.
+                  </video>
+                  <p>2) SHOULDER PRESS (3 set, 10-12 reps)</p>
+                  <video controls autoplay width="100%" height="auto">
+                     <source src="vids/front shoulder.mp4" type="video/mp4">
+                     Your browser does not support the video tag.
+                  </video>
+                  <p>3) LATERAL SHOULDER RAISES (3 set, 10-12 reps)</p>
+                  <video controls autoplay width="100%" height="auto">
+                     <source src="vids/lateral shoulder.mp4" type="video/mp4">
+                     Your browser does not support the video tag.
                   </video>`;
+                  
                } else if (svgElement.id === 'arms') {
                   bodyPartName = 'arms';
                   infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>

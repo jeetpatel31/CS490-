@@ -5,3 +5,5 @@ git status
 git commit -m "addid txt file"
 
 git push -u origin master
+
+git push
