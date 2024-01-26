@@ -19,115 +19,12 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    
+    <title>Calendar with Events</title>
 
     <style>
 
-
-      /* Common styles */
-      body {
-        background: linear-gradient(to right, #3445a5 70%, #ffffff 50%);
-          color: rgb(0, 0, 0);
-          font-family: Verdana, Geneva, Tahoma, sans-serif;
-          margin: 0;
-          padding: 0;
-      }
-      
-      .text-center {
-          text-align: center;
-      }
-      
-      .info-div {
-          position: fixed;
-          display: none;
-          background-color: white;
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-          z-index: 1000;
-          max-width: 90%; /* Adjust as needed */
-          text-align: left;
-          font-family: Arial, sans-serif;
-          font-size: 14px;  
-          overflow-y: auto; /* Enable vertical scrolling */
-          max-height: 50%;  
-          margin-left: 30px;
-      }
-      
-nav {
-  background-color: white;
-  padding: 10px;
-  text-align: center;
-  position: fixed; /* Fix the position at the top */
-  top: 0; /* Align to the top of the page */
-  left: 0; /* Align to the left */
-  width: 100%; /* Stretch across the full width of the page */
-  z-index: 1000; /* Ensure it's above other elements */
-}
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0; /* Removes default margin */
-}
-
-nav ul li {
-  display: inline-block; /* Display items side by side */
-  margin-right: 20px; /* Adjust spacing between items */
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: black;
-  font-family: 'Poppins', sans-serif; /* Set font to match the rest of the site */
-  font-size: 16px; /* Adjust font size as needed */
-}
-
-nav ul li {
-  position: relative; /* Needed for absolute positioning of the dropdown */
-}
-
-/* Style for the dropdown menu */
-.dropdown {
-  display: none;
-  position: absolute;
-  background-color: white; /* Match the nav bar color */
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Optional: for a dropdown shadow */
-  z-index: 1; /* Ensure it's above other content */
-}
-
-/* Display the dropdown on hover */
-nav ul li:hover .dropdown {
-  display: block;
-}
-
-/* Style for dropdown items */
-.dropdown li {
-  display: block;
-  text-align: left;
-}
-
-.dropdown li a {
-  display: block;
-  padding: 12px 16px;
-  text-decoration: none;
-  color: black; /* Text color */
-}
-
-/* Change background color on hover for dropdown items */
-.dropdown li a:hover {
-  background-color: #f2f2f2; /* Light grey background */
-}
-
-
-
-body {
-  padding-top: 50px; /* Add padding to the top of the body to prevent content from hiding under the fixed navbar */
-}
-
-
-      
-      
-      
-      :root {
+:root {
           --primary-clr:#b38add
         }
         * {
@@ -167,8 +64,8 @@ body {
     }
         .container {
           position:relative;
-          width:600px;
-          min-height:340px;
+          width:70%;
+          height:240px;
           margin:0 auto;
           padding:2px;
           color:#fff;
@@ -179,7 +76,7 @@ body {
         }
         .left {
           width:300%;
-          margin-right: 10px;
+          margin-right: 60px;
           padding:8px
           
         }
@@ -258,7 +155,7 @@ body {
         }
         .calendar .days .day {
           width:14.28%;
-          height:36px;
+          height:20%;
           display:flex;
           align-items:center;
           justify-content:center;
@@ -724,137 +621,85 @@ body {
 .info-div button:hover {
     background-color: #9b72aa; /* Slightly darker shade of primary color for hover effect */
 }
-      
-      </style>
 
-    <title>Calendar with Eventss</title>
+    </style>
   </head>
+
+
   <body>
-    <nav>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li>
-          <a href="#fitness">Fitness</a>
-          <!-- Dropdown Menu -->
-          <ul class="dropdown">
-            <li><a href="./createplane.html">Create a Plan</a></li>
-            <!-- Add more dropdown items here if needed -->
-          </ul>
-        </li>
-        <li><a href="#calories-calculator">Calories Calculator</a></li>
-      </ul>
-    </nav>
-    
     <div class="container">
-      <div id="welcome-message" class="welcome-message"></div>
-      <div class="left">
-        <div class="calendar">
-          <div class="month">
-            <i class="fas fa-angle-left prev"></i>
-            <div class="date">december 2015</div>
-            <i class="fas fa-angle-right next"></i>
-          </div>
-          <div class="weekdays">
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-          </div>
-          <div class="days"></div>
-          <div class="goto-today">
-            <div class="goto">
-              <input type="text" placeholder="mm/yyyy" class="date-input" />
-              <button class="goto-btn">Go</button>
+        <div id="welcome-message" class="welcome-message"></div>
+        <div class="left">
+          <div class="calendar">
+            <div class="month">
+              <i class="fas fa-angle-left prev"></i>
+              <div class="date">december 2015</div>
+              <i class="fas fa-angle-right next"></i>
             </div>
-            <button class="today-btn">Today</button>
+            <div class="weekdays">
+              <div>Sun</div>
+              <div>Mon</div>
+              <div>Tue</div>
+              <div>Wed</div>
+              <div>Thu</div>
+              <div>Fri</div>
+              <div>Sat</div>
+            </div>
+            <div class="days"></div>
+            <div class="goto-today">
+              <div class="goto">
+                <input type="text" placeholder="mm/yyyy" class="date-input" />
+                <button class="goto-btn">Go</button>
+              </div>
+              <button class="today-btn">Today</button>
+            </div>
           </div>
         </div>
+        <div class="right">
+          <div class="today-date">
+            <div class="event-day">wed</div>
+            <div class="event-date">12th december 2022</div>
+          </div>
+          <div class="events"></div>
+          <div class="add-event-wrapper">
+            <div class="add-event-header">
+              <div class="title">Add Event</div>
+              <i class="fas fa-times close"></i>
+            </div>
+            <div class="add-event-body">
+              <div class="add-event-input">
+                <input type="text" placeholder="Event Name" class="event-name" />
+              </div>
+              <div class="add-event-input">
+                <input
+                  type="text"
+                  placeholder="Event Time From"
+                  class="event-time-from"
+                />
+              </div>
+              <div class="add-event-input">
+                <input
+                  type="text"
+                  placeholder="Event Time To"
+                  class="event-time-to"
+                />
+              </div>
+            </div>
+            <div class="add-event-footer">
+              <button class="add-event-btn">Add Event</button>
+            </div>
+          </div>
+        </div>
+        <button class="add-event">
+          <i class="fas fa-plus"></i>
+        </button>
       </div>
-      <div class="right">
-        <div class="today-date">
-          <div class="event-day">wed</div>
-          <div class="event-date">12th december 2022</div>
-        </div>
-        <div class="events"></div>
-        <div class="add-event-wrapper">
-          <div class="add-event-header">
-            <div class="title">Add Event</div>
-            <i class="fas fa-times close"></i>
-          </div>
-          <div class="add-event-body">
-            <div class="add-event-input">
-              <input type="text" placeholder="Event Name" class="event-name" />
-            </div>
-            <div class="add-event-input">
-              <input
-                type="text"
-                placeholder="Event Time From"
-                class="event-time-from"
-              />
-            </div>
-            <div class="add-event-input">
-              <input
-                type="text"
-                placeholder="Event Time To"
-                class="event-time-to"
-              />
-            </div>
-          </div>
-          <div class="add-event-footer">
-            <button class="add-event-btn">Add Event</button>
-          </div>
-        </div>
-      </div>
-      <button class="add-event">
-        <i class="fas fa-plus"></i>
-      </button>
-    </div>
 
-    <main>
-
-        
-        
-      <!-- SVG images comes here -->
-      <section id="body-section">
-          <!-- BODY - FRONT -->
-          <div class="fig-wrapper">
-              <figure class="fig fig-front">
-                  <!-- SVG comes here -->
-                  <object id="svg-front" class="svg" data="./body-front.svg" type="image/svg+xml"></object>
-                  <!-- SVG front END -->
-
-              </figure>
-          </div>
-
-          <!-- BODY - BACK -->
-          <div class="fig-wrapper">
-              <figure class="fig fig-back">
-                  <!-- SVG comes here -->
-                  <object id="svg-back" class="svg" data="./body-back.svg" type="image/svg+xml"></object>
-                  <!-- SVG back END -->
-              </figure>
-          </div>
+    <script>
 
 
 
-          
-
-          
-      </section>
-      
-
-      
-
-      
-
-  </main>
-    
-
-    <script >
-      const calendar = document.querySelector(".calendar"),
+const calendar = document.querySelector(".calendar"),
   date = document.querySelector(".date"),
   daysContainer = document.querySelector(".days"),
   prev = document.querySelector(".prev"),
@@ -1427,308 +1272,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-window.onload = addStyleToSvg;
-
-
-let infoDiv;
-
-function addStyleToSvg() {
-    addStyleFor("svg-front");
-    addStyleFor("svg-back");
-}
-
-function saveWorkoutToDatabase(workout) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const username = urlParams.get('username');
-
-    // Add the username to the workout object
-    workout.username = decodeURIComponent(username);
-
-    fetch('http://localhost:3001/addWorkout', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(workout),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => console.log('Workout saved:', data))
-    .catch(error => console.error('Error:', error));
-}
-
-
-
-function addWorkoutEvent(bodyPart) {
-  // Use the globally selected date
-  const selectedDate = new Date(year, month, activeDay);
-  const dateString = selectedDate.toISOString().split('T')[0];
-
-  // Event title
-  const eventTitle = `Workout for ${bodyPart}`;
-
-  // Check if an event for the selected date already exists
-  let dateExists = false;
-  for (let i = 0; i < eventsArr.length; i++) {
-    if (eventsArr[i].day === selectedDate.getDate() && eventsArr[i].month === selectedDate.getMonth() + 1 && eventsArr[i].year === selectedDate.getFullYear()) {
-      dateExists = true;
-      eventsArr[i].events.push({ title: eventTitle, time: 'All Day' });
-      break;
-    }
-  }
-
-  // If no event for the selected date exists, create a new entry
-  if (!dateExists) {
-    eventsArr.push({
-      day: selectedDate.getDate(),
-      month: selectedDate.getMonth() + 1,
-      year: selectedDate.getFullYear(),
-      events: [{ title: eventTitle, time: 'All Day' }]
-    });
-  }
-
-  const workout = {
-        date: dateString, // Use the existing dateString variable
-        bodyPart: bodyPart,
-        title: `Workout for ${bodyPart}`
-    };
-    saveWorkoutToDatabase(workout);
-
-  // Update the calendar and events display
-  initCalendar();
-  updateEvents(selectedDate.getDate());
-}
-
-
-
-function addStyleFor(svgFilePrefix) {
-    let svgObject = document.getElementById(svgFilePrefix);
-    let svgDocument = svgObject.contentDocument;
-
-    if (!infoDiv) {
-      infoDiv = document.createElement('div');
-      infoDiv.classList.add('info-div');
-      infoDiv.style.display = 'none';
-
-      document.body.appendChild(infoDiv);
-  }
-
-
-    let svgElements = svgDocument.getElementsByClassName("hover");
-
-    for (let i = 0; i < svgElements.length; i++) {
-        const svgElement = svgElements[i];
-        const children = svgElement.children;
-
-        const originalColors = [];
-
-        for (let i = 0; i < children.length; i++) {
-            originalColors[i] = children[i].style.fill;
-        }
-
-        svgElement.addEventListener("mouseover", function () {
-            svgElement.style.cursor = "pointer";
-            
-            for (let i = 0; i < children.length; i++) {
-                const svgItem = children[i];
-                svgItem.style.fill = "red";
-                svgItem.style.transition = "transform 0.3s ease";
-                svgItem.style.transform = "translate(4px, -4px)";
-            }
-        });
-
-        svgElement.addEventListener("mouseout", function () {
-            svgElement.style.cursor = "default";
-        
-            for (let i = 0; i < children.length; i++) {
-                const svgItem = children[i];
-                svgItem.style.fill = originalColors[i];
-                svgItem.style.transition = "transform 0.3s ease";
-                svgItem.style.transform = "translate(0px, 0px)";
-            }
-        });
-
-        svgElement.addEventListener("click", function (event) {
-            svgElement.style.cursor = "default";
-
-            for (let i = 0; i < children.length; i++) {
-                const svgItem = children[i];
-                svgItem.style.fill = originalColors[i];
-            }
-            let bodyPartName = '';
-            
-            if (svgFilePrefix === "svg-front"){
-               if (svgElement.id === 'necks') {
-                  bodyPartName = 'Neck';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the neck</h2>
-                  <p>Here is some information about the neck...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/neck.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'chest') {
-                  bodyPartName = 'chest';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the chest</h2>
-                  <p>Here is some information about the chest...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/chest.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/chest.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-                  
-               } else if (svgElement.id === 'shoulder') {
-                  bodyPartName = 'shoulder';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Basic Exersice for Shoulders </h2>
-                  <p>Here are 3 Exersice ...</p>
-                  <p>1)FRONT SHOULDER RAISES (3 set, 10-12 reps)</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/sholder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>
-                  <p>2) SHOULDER PRESS (3 set, 10-12 reps)</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/front shoulder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>
-                  <p>3) LATERAL SHOULDER RAISES (3 set, 10-12 reps)</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/lateral shoulder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-                  
-               } else if (svgElement.id === 'arms') {
-                  bodyPartName = 'arms';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the arms</h2>
-                  <p>Here is some information about the arms...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/biceps.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'stomach') {
-                  bodyPartName = 'stomach';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the stomach</h2>
-                  <p>Here is some information about the stomach...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/abs.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'legs') {
-                  bodyPartName = 'legs';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the legs</h2>
-                  <p>Here is some information about the legs...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/legs.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               }
-            } else if (svgFilePrefix === "svg-back") {
-               if (svgElement.id === 'shoulder-back') {
-                  bodyPartName = 'shoulder-back';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back sholder</h2>
-                  <p>Here is some information about the back sholder...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/back sholder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'back-inner') {
-                  bodyPartName = 'back-inner';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back inner back</h2>
-                  <p>Here is some information about the back inner back...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/innerback.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'arms-back') {
-                  bodyPartName = 'arms-back';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back triceps</h2>
-                  <p>Here is some information about the back triceps...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/triceps.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'back-outer') {
-                  bodyPartName = 'back-outer';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back outer back</h2>
-                  <p>Here is some information about the back outer back...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/outer back.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'butt') {
-                  infoDiv.innerHTML = 'Information about the butt goes here';
-               } else if (svgElement.id === 'legs-back') {
-                  infoDiv.innerHTML = 'Information about the legs-back goes here';
-               }
-            }
-
-            infoDiv.style.display = 'block';
-            infoDiv.style.top = '50%';
-            infoDiv.style.left = '50%';
-            infoDiv.style.transform = 'translate(-50%, -50%)';
-
-            event.stopPropagation();
-        });
-    }
-
-    infoDiv.addEventListener("click", function(event) {
-      event.stopPropagation(); // Prevent click events on infoDiv from propagating
-  });
-  
-  document.addEventListener("click", function(event) {
-   if (!infoDiv.contains(event.target)) {
-       infoDiv.style.display = 'none';
-   }
-});
-
-
-
-
-  
-}
 
 
     </script>
