@@ -37,21 +37,26 @@
       }
       
       .info-div {
-          position: fixed;
-          display: none;
-          background-color: white;
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-          z-index: 1000;
-          max-width: 90%; /* Adjust as needed */
-          text-align: left;
-          font-family: Arial, sans-serif;
-          font-size: 14px;  
-          overflow-y: auto; /* Enable vertical scrolling */
-          max-height: 50%;  
-          margin-left: 30px;
-      }
+    position: fixed;
+    display: none;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 20%; /* Adjusted to make the div smaller */
+    text-align: left;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    overflow-y: auto; /* Keeps vertical scrolling */
+    max-height: 80%; /* Adjusted for better fit */
+    left: 0; /* Aligns the div to the left */
+    top: 50%; /* Vertically centered */
+    transform: translateY(-50%); /* Centers the div vertically */
+    margin-left: -340px; /* Adjust margin as needed */
+    margin-top: 3%;
+}
+
       
 nav {
   background-color: white;
@@ -182,7 +187,7 @@ body {
         .left {
           width:300%;
           margin-right: 10px;
-          padding:8px
+          padding:1px
           
         }
         .calendar {
@@ -603,10 +608,7 @@ body {
       @media screen and (min-width: 650px) {
 
       
-        .info-div {
-            max-width: 25%; /* Adjust as needed for smaller screens */
-            
-        }
+
       
         .fly {
             z-index: 10;
@@ -651,16 +653,6 @@ body {
         }
       
         
-        .info-div {
-            position: absolute;
-            height: auto;
-            transform: translate(-50%, -10%);
-            z-index: 1000;
-            width: 150%;
-            overflow-y: auto; /* Enable vertical scrolling */
-            max-height: 20%;  
-            
-        }
       
         #body-section {
             position: relative;
@@ -720,35 +712,6 @@ body {
 }
 
 
-.workout-plans {
-    position: fixed;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.workout-plan {
-    background-color: #f2f2f2;
-    margin: 10px;
-    padding: 20px;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease-in-out;
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-}
-
-.workout-plan-link:hover .workout-plan {
-    transform: translateY(-5px);
-    background-color: #e0e0e0;
-}
-
-.workout-plan-link {
-    text-decoration: none;
-    color: inherit;
-}
 
 
 
@@ -760,18 +723,6 @@ body {
   </head>
   <body>
 
-
-    <div class="workout-plans">
-      <a href="./2week.html" class="workout-plan-link">
-          <div class="workout-plan">2 Week Plan</div>
-      </a>
-      <a href="URL_FOR_4_WEEK_PLAN" class="workout-plan-link">
-          <div class="workout-plan">4 Week Plan</div>
-      </a>
-      <a href="URL_FOR_6_WEEK_PLAN" class="workout-plan-link">
-          <div class="workout-plan">6 Week Plan</div>
-      </a>
-  </div>
   
   
     <nav>
@@ -1474,6 +1425,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+document.querySelector('.calendar').addEventListener('mouseenter', function(event) {
+    if(event.target.classList.contains('day')) {
+        const dayNum = event.target.getAttribute('data-day');
+        const workout = "Workout for day " + dayNum; // Placeholder for workout data
+        document.getElementById('workoutText').innerText = workout;
+        const popup = document.getElementById('dayPopup');
+        popup.style.display = 'block';
+        popup.style.left = event.target.offsetLeft + 'px';
+        popup.style.top = event.target.offsetTop + 30 + 'px';
+    }
+}, true); // Use true for capturing phase
+
+document.querySelector('.calendar').addEventListener('mouseleave', function(event) {
+    if(event.target.classList.contains('day')) {
+        document.getElementById('dayPopup').style.display = 'none';
+    }
+}, true);
 
 
 
@@ -1777,5 +1745,28 @@ function addStyleFor(svgFilePrefix) {
 
 
     </script>
-  </body>
+  
+<div id="dayPopup" style="display: none; position: absolute; background-color: white; border: 1px solid black; padding: 10px;">
+    <p id="workoutText"></p>
+</div>
+</body>
+
+<script>
+document.querySelectorAll('.day').forEach(day => {
+    day.addEventListener('mouseenter', function() {
+        const dayNum = this.getAttribute('data-day');
+        const workout = "Workout for day " + dayNum; // Placeholder for workout data
+        document.getElementById('workoutText').innerText = workout;
+        const popup = document.getElementById('dayPopup');
+        popup.style.display = 'block';
+        popup.style.left = this.offsetLeft + 'px';
+        popup.style.top = this.offsetTop + 30 + 'px';
+    });
+
+    day.addEventListener('mouseleave', function() {
+        document.getElementById('dayPopup').style.display = 'none';
+    });
+});
+</script>
+</body>
 </html>
