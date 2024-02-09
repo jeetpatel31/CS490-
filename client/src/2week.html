@@ -37,26 +37,21 @@
       }
       
       .info-div {
-    position: fixed;
-    display: none;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    max-width: 20%; /* Adjusted to make the div smaller */
-    text-align: left;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    overflow-y: auto; /* Keeps vertical scrolling */
-    max-height: 80%; /* Adjusted for better fit */
-    left: 0; /* Aligns the div to the left */
-    top: 50%; /* Vertically centered */
-    transform: translateY(-50%); /* Centers the div vertically */
-    margin-left: -340px; /* Adjust margin as needed */
-    margin-top: 3%;
-}
-
+          position: fixed;
+          display: none;
+          background-color: white;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          z-index: 1000;
+          max-width: 90%; /* Adjust as needed */
+          text-align: left;
+          font-family: Arial, sans-serif;
+          font-size: 14px;  
+          overflow-y: auto; /* Enable vertical scrolling */
+          max-height: 50%;  
+          margin-left: 30px;
+      }
       
 nav {
   background-color: white;
@@ -187,7 +182,7 @@ body {
         .left {
           width:300%;
           margin-right: 10px;
-          padding:1px
+          padding:8px
           
         }
         .calendar {
@@ -608,7 +603,10 @@ body {
       @media screen and (min-width: 650px) {
 
       
-
+        .info-div {
+            max-width: 25%; /* Adjust as needed for smaller screens */
+            
+        }
       
         .fly {
             z-index: 10;
@@ -653,6 +651,16 @@ body {
         }
       
         
+        .info-div {
+            position: absolute;
+            height: auto;
+            transform: translate(-50%, -10%);
+            z-index: 1000;
+            width: 150%;
+            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: 20%;  
+            
+        }
       
         #body-section {
             position: relative;
@@ -713,8 +721,10 @@ body {
 
 
 
-
-
+.modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4); }
+.modal-content { background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; }
+.close { color: #aaaaaa; float: right; font-size: 28px; font-weight: bold; }
+.close:hover, .close:focus { color: #000; text-decoration: none; cursor: pointer; }
 
       
       </style>
@@ -722,9 +732,15 @@ body {
     <title>Calendar with Eventss</title>
   </head>
   <body>
-
-  
-  
+    <div id="dayDetailsModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalDate">Day Details</h2>
+        <p id="workoutDetails">Workout: TBA</p>
+        <p id="mealPlanDetails">Meal Plan: TBA</p>
+      </div>
+    </div>
+    
     <nav>
       <ul>
         <li><a href="./index.html">Home</a></li>
@@ -1423,27 +1439,53 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+const twoWeekPlan = {
+  "1": { meal: "Meal Plan for Day 1", workout: "Workout for Day 1" },
+  "2": { meal: "Meal Plan for Day 2", workout: "Workout for Day 2" },
+  // Add the remaining days up to Day 14
+  "14": { meal: "Meal Plan for Day 14", workout: "Workout for Day 14" }
+};
 
 
-document.querySelector('.calendar').addEventListener('mouseenter', function(event) {
-    if(event.target.classList.contains('day')) {
-        const dayNum = event.target.getAttribute('data-day');
-        const workout = "Workout for day " + dayNum; // Placeholder for workout data
-        document.getElementById('workoutText').innerText = workout;
-        const popup = document.getElementById('dayPopup');
-        popup.style.display = 'block';
-        popup.style.left = event.target.offsetLeft + 'px';
-        popup.style.top = event.target.offsetTop + 30 + 'px';
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('dayDetailsModal');
+  const span = document.getElementsByClassName('close')[0];
+
+  // Function to open modal with specific day details
+  function openModal(day) {
+  const dayNumber = day.trim();
+  const plan = twoWeekPlan[dayNumber];
+  if (plan) {
+    document.getElementById('modalDate').innerHTML = 'Details for ' + day + ' ' + months[month] + ' ' + year;
+    document.getElementById('workoutDetails').innerHTML = 'Workout: ' + plan.workout;
+    document.getElementById('mealPlanDetails').innerHTML = 'Meal Plan: ' + plan.meal;
+    document.getElementById('dayDetailsModal').style.display = 'block';
+  }
+}
+
+  // Close the modal on <span> (x) click
+  span.onclick = function() {
+    modal.style.display = 'none';
+  }
+
+  // Close the modal when user clicks anywhere outside of it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
     }
-}, true); // Use true for capturing phase
+  }
 
-document.querySelector('.calendar').addEventListener('mouseleave', function(event) {
-    if(event.target.classList.contains('day')) {
-        document.getElementById('dayPopup').style.display = 'none';
-    }
-}, true);
-
-
+  // Add click listener to each day
+  document.querySelectorAll('.day, .prev-date, .next-date').forEach(function(day) {
+    day.addEventListener('click', function() {
+    const dayContent = this.textContent || this.innerText;
+    openModal(dayContent);
+  });
+  });
+});
 
 
 
@@ -1745,28 +1787,5 @@ function addStyleFor(svgFilePrefix) {
 
 
     </script>
-  
-<div id="dayPopup" style="display: none; position: absolute; background-color: white; border: 1px solid black; padding: 10px;">
-    <p id="workoutText"></p>
-</div>
-</body>
-
-<script>
-document.querySelectorAll('.day').forEach(day => {
-    day.addEventListener('mouseenter', function() {
-        const dayNum = this.getAttribute('data-day');
-        const workout = "Workout for day " + dayNum; // Placeholder for workout data
-        document.getElementById('workoutText').innerText = workout;
-        const popup = document.getElementById('dayPopup');
-        popup.style.display = 'block';
-        popup.style.left = this.offsetLeft + 'px';
-        popup.style.top = this.offsetTop + 30 + 'px';
-    });
-
-    day.addEventListener('mouseleave', function() {
-        document.getElementById('dayPopup').style.display = 'none';
-    });
-});
-</script>
-</body>
+  </body>
 </html>
