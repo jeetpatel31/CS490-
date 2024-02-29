@@ -182,7 +182,7 @@ body {
         .left {
           width:300%;
           margin-right: 10px;
-          padding:8px
+          padding:0px
           
         }
         .calendar {
@@ -1439,12 +1439,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-const twoWeekPlan = {
-  "1": { meal: "Meal Plan for Day 1", workout: "Workout for Day 1" },
-  "2": { meal: "Meal Plan for Day 2", workout: "Workout for Day 2" },
-  // Add the remaining days up to Day 14
-  "14": { meal: "Meal Plan for Day 14", workout: "Workout for Day 14" }
-};
+// Calculate the start date as today
+const startDate = new Date();
+startDate.setHours(0, 0, 0, 0); // Normalize the start date to the beginning of today
+
+// Generate the two-week plan dynamically
+const twoWeekPlan = {};
+for (let i = 0; i < 14; i++) {
+  const planDate = new Date(startDate);
+  planDate.setDate(startDate.getDate() + i);
+  const dayKey = `${planDate.getDate()}/${planDate.getMonth() + 1}/${planDate.getFullYear()}`;
+  twoWeekPlan[dayKey] = {
+    meal: `Meal Plan for ${planDate.toDateString()}`,
+    workout: `Workout Plan for ${planDate.toDateString()}`
+  };
+}
+
 
 
 
@@ -1455,16 +1465,18 @@ document.addEventListener('DOMContentLoaded', function() {
   const span = document.getElementsByClassName('close')[0];
 
   // Function to open modal with specific day details
-  function openModal(day) {
-  const dayNumber = day.trim();
-  const plan = twoWeekPlan[dayNumber];
+  function openModal(dayContent) {
+  const clickedDate = new Date(year, month, parseInt(dayContent, 10)); // Convert clicked day to date
+  const planKey = `${clickedDate.getDate()}/${clickedDate.getMonth() + 1}/${clickedDate.getFullYear()}`;
+  const plan = twoWeekPlan[planKey];
   if (plan) {
-    document.getElementById('modalDate').innerHTML = 'Details for ' + day + ' ' + months[month] + ' ' + year;
+    document.getElementById('modalDate').innerHTML = 'Details for ' + planKey;
     document.getElementById('workoutDetails').innerHTML = 'Workout: ' + plan.workout;
     document.getElementById('mealPlanDetails').innerHTML = 'Meal Plan: ' + plan.meal;
     document.getElementById('dayDetailsModal').style.display = 'block';
   }
 }
+
 
   // Close the modal on <span> (x) click
   span.onclick = function() {
@@ -1486,6 +1498,13 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   });
 });
+
+
+
+
+
+
+
 
 
 
