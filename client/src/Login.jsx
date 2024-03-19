@@ -15,7 +15,7 @@ function Login() {
             console.log(response.data); // Log the data part to see the actual server response
             if (response.data.success) {
                 const username = encodeURIComponent(response.data.name);
-                window.location.href = `http://127.0.0.1:5500/src/index.html?username=${username}`;
+                window.location.href = `http://127.0.0.1:5500/client/src/index.html?username=${username}`;
             } else {
                 // Handle failed login (incorrect password, email not registered, etc.)
                 console.log(response.data.message);

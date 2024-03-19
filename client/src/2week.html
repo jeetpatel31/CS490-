@@ -726,12 +726,36 @@ body {
 .close { color: #aaaaaa; float: right; font-size: 28px; font-weight: bold; }
 .close:hover, .close:focus { color: #000; text-decoration: none; cursor: pointer; }
 
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 10;
+    width: 250px; /* Adjust as needed */
+    height: 100%;
+    background-color: #f0f0f0; /* Light grey background */
+    padding: 20px;
+    box-shadow: 2px 0px 5px rgba(0,0,0,0.1); /* Optional: adds shadow to the sidebar */
+    overflow-y: auto; /* Scrollable if content is too long */
+    z-index: 999; /* Ensure it's above other content but below modal if necessary */
+}
+
       
       </style>
 
     <title>Calendar with Eventss</title>
   </head>
   <body>
+
+    <div class="sidebar">
+      <h2 id="sidebarDate">Day Details</h2>
+      <p id="sidebarWorkoutDetails">Workout: TBA</p>
+      <p id="sidebarMealPlanDetails">Meal Plan: TBA</p>
+      <div id="sidebarVideoContainer"></div> <!-- Video will be inserted here -->
+  </div>
+  
+
+
     <div id="dayDetailsModal" class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
@@ -1460,22 +1484,109 @@ for (let i = 0; i < 14; i++) {
 
 
 
+// Example workout and meal plans
+const workouts = [
+  "Cardio: 30 minutes running",
+  "Strength: Upper body workout",
+  "HIIT: 15 minutes intense cycling",
+  // Add more as needed
+];
+
+const workoutVideos = {
+    "Cardio": ["vids/neck.mp4"],
+    "Strength": ["vids/chest.mp4", "vids/neck.mp4"],
+    "HIIT": ["path/to/hiit_video.mp4"],
+    // Add more mappings as needed
+};
+
+const meals = [
+  "Breakfast: Oatmeal with fruits",
+  "Lunch: Grilled chicken salad",
+  "Dinner: Baked salmon with quinoa",
+  // Add more as needed
+];
+
+// Generate two-week plan from today
+function generateTwoWeekPlan() {
+  const startDate = new Date();
+  for (let i = 0; i < 14; i++) {
+    const planDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + i);
+    const day = planDate.getDate();
+    const month = planDate.getMonth() + 1; // JavaScript months are 0-indexed
+    const year = planDate.getFullYear();
+    const workoutIndex = i % workouts.length;
+    const mealIndex = i % meals.length;
+
+    const eventTitle = `Day ${i + 1}: Workout and Meal Plan`;
+    const eventDetail = `${workouts[workoutIndex]} | ${meals[mealIndex]}`;
+
+    // Check if the date already exists in eventsArr to avoid duplicates
+    let dateFound = eventsArr.find(event => event.day === day && event.month === month && event.year === year);
+    if (!dateFound) {
+      eventsArr.push({
+        day: day,
+        month: month,
+        year: year,
+        events: [{
+          title: eventTitle,
+          time: "All Day",
+          detail: eventDetail // This could be displayed in your modal or event detail view
+        }]
+      });
+    }
+  }
+
+  // Ensure the calendar is updated to reflect these changes
+  initCalendar();
+}
+
+document.addEventListener('DOMContentLoaded', generateTwoWeekPlan);
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
   const modal = document.getElementById('dayDetailsModal');
   const span = document.getElementsByClassName('close')[0];
 
-  // Function to open modal with specific day details
-  function openModal(dayContent) {
-  const clickedDate = new Date(year, month, parseInt(dayContent, 10)); // Convert clicked day to date
-  const planKey = `${clickedDate.getDate()}/${clickedDate.getMonth() + 1}/${clickedDate.getFullYear()}`;
-  const plan = twoWeekPlan[planKey];
-  if (plan) {
-    document.getElementById('modalDate').innerHTML = 'Details for ' + planKey;
-    document.getElementById('workoutDetails').innerHTML = 'Workout: ' + plan.workout;
-    document.getElementById('mealPlanDetails').innerHTML = 'Meal Plan: ' + plan.meal;
-    document.getElementById('dayDetailsModal').style.display = 'block';
-  }
+  function updateSidebar(dayContent) {
+    const clickedDay = parseInt(dayContent);
+    const clickedMonth = month + 1; // Adjust for 0-indexed month
+    const clickedYear = year;
+    const eventForDay = eventsArr.find(event => event.day === clickedDay && event.month === clickedMonth && event.year === clickedYear);
+    
+    if (eventForDay) {
+        const planDetails = eventForDay.events[0]; // Assuming one event per day
+        const workoutType = planDetails.detail.split(':')[0]; // Extract the workout type (e.g., Cardio)
+        const videoUrls = workoutVideos[workoutType]; // Find the corresponding video URLs array
+        
+        document.getElementById('sidebarDate').innerHTML = `Details for ${clickedDay}/${clickedMonth}/${clickedYear}`;
+        document.getElementById('sidebarWorkoutDetails').innerHTML = 'Workout: ' + planDetails.detail.split(' | ')[0];
+        document.getElementById('sidebarMealPlanDetails').innerHTML = 'Meal Plan: ' + planDetails.detail.split(' | ')[1];
+
+        // Handle multiple videos
+        const sidebarVideoContainer = document.getElementById('sidebarVideoContainer');
+        sidebarVideoContainer.innerHTML = ''; // Clear previous videos
+        
+        if (videoUrls && videoUrls.length) {
+            videoUrls.forEach(videoUrl => {
+                sidebarVideoContainer.innerHTML += `
+                    <video width="100%" controls>
+                        <source src="${videoUrl}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                `;
+            });
+        } else {
+            sidebarVideoContainer.innerHTML = 'No video available for this workout.';
+        }
+    } else {
+        console.log('No event found for this day');
+    }
 }
+
+
 
 
   // Close the modal on <span> (x) click
@@ -1493,8 +1604,11 @@ document.addEventListener('DOMContentLoaded', function() {
   // Add click listener to each day
   document.querySelectorAll('.day, .prev-date, .next-date').forEach(function(day) {
     day.addEventListener('click', function() {
+    // const dayContent = this.textContent || this.innerText;
+    // openModal(dayContent);
+
     const dayContent = this.textContent || this.innerText;
-    openModal(dayContent);
+    updateSidebar(dayContent); // Call updateSidebar instead of openModal
   });
   });
 });
