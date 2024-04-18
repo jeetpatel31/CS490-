@@ -176,7 +176,7 @@ body {
   display: flex;
   border-radius: 4px;
   background-color: #373c4f;
-  left: 20%;
+  left: 10%;
   transform: translateX(-50%);
 }
         .left {
@@ -777,6 +777,38 @@ body {
     text-align: center;
     font-size: 18px;
 }
+
+.chatbot-messages {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.chatbot-user-response, .chatbot-bot-question {
+    margin: 5px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 80%;
+}
+
+.chatbot-bot-question {
+    align-self: flex-start;
+    background-color: #f1f1f1;
+}
+
+.chatbot-user-response {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: white;
+}
+
+.chatbot-inputs {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
 
 
       
@@ -1467,72 +1499,118 @@ body {
 
 
 
-      function initChatbot() {
-          const messages = document.getElementById('chatbotMessages');
-          const inputs = document.getElementById('chatbotInputs');
-          if (messages && inputs) {
-              askFitnessGoal();
-          } else {
-              console.error('Chatbot elements not found!');
-          }
-      }
 
-      function askFitnessGoal() {
-          const messages = document.getElementById('chatbotMessages');
-          messages.innerHTML = '<p>What is your main fitness goal?</p>';
-          const inputs = document.getElementById('chatbotInputs');
-          inputs.innerHTML = `
-              <button onclick="askWorkoutFrequency('weight')">Lose Weight</button>
-              <button onclick="askWorkoutFrequency('muscle')">Gain Muscle</button>
-              <button onclick="askWorkoutFrequency('fitness')">Maintain Fitness</button>
-          `;
-      }
+    let chatbotState = {
+    currentStep: 'askFitnessGoal',
+    goal: null,
+    frequency: null,
+    diet: null,
+    exerciseType: null
+};
 
-      function askWorkoutFrequency(goal) {
-          const messages = document.getElementById('chatbotMessages');
-          messages.innerHTML = '<p>How often do you plan to workout each week?</p>';
-          const inputs = document.getElementById('chatbotInputs');
-          inputs.innerHTML = `
-              <button onclick="askDiet('${goal}', 'low')">1-2 times</button>
-              <button onclick="askDiet('${goal}', 'medium')">3-4 times</button>
-              <button onclick="askDiet('${goal}', 'high')">5 or more times</button>
-          `;
-      }
+function initChatbot() {
+    askFitnessGoal();
+}
 
-      function askDiet(goal, frequency) {
-          const messages = document.getElementById('chatbotMessages');
-          messages.innerHTML = '<p>Do you follow any specific diet?</p>';
-          const inputs = document.getElementById('chatbotInputs');
-          inputs.innerHTML = `
-              <button onclick="evaluatePlan('${goal}', '${frequency}', 'none')">No specific diet</button>
-              <button onclick="evaluatePlan('${goal}', '${frequency}', 'keto')">Keto</button>
-              <button onclick="evaluatePlan('${goal}', '${frequency}', 'vegan')">Vegan</button>
-          `;
-      }
+function displayQuestion(question) {
+    const messages = document.getElementById('chatbotMessages');
+    const questionDiv = document.createElement('div');
+    questionDiv.classList.add('chatbot-bot-question');
+    questionDiv.textContent = question;
+    messages.appendChild(questionDiv);
+}
 
-      function evaluatePlan(goal, frequency, diet) {
-          let plan = '2 Week Plan';
-          if (goal === 'muscle' && frequency === 'high') {
-              plan = '6 Week Plan';
-          } else if (goal === 'weight' && frequency === 'medium' && diet !== 'none') {
-              plan = '4 Week Plan';
-          } else if (goal === 'fitness' && frequency === 'low') {
-              plan = '2 Week Plan';
-          } else if (goal === 'weight' && frequency === 'high') {
-              plan = '4 Week Plan';
-          } else if (goal === 'fitness' && frequency === 'high') {
-              plan = '6 Week Plan';
-          }
+function displayUserResponse(response) {
+    const messages = document.getElementById('chatbotMessages');
+    const responseDiv = document.createElement('div');
+    responseDiv.classList.add('chatbot-user-response');
+    responseDiv.textContent = response;
+    messages.appendChild(responseDiv);
+}
 
-          const messages = document.getElementById('chatbotMessages');
-          messages.innerHTML += `<p>Based on your choices, we recommend the <strong>${plan}</strong>.</p>`;
-          const inputs = document.getElementById('chatbotInputs');
-          inputs.innerHTML = '';
-      }
+function askFitnessGoal() {
+    displayQuestion("What is your main fitness goal?");
+    const inputs = document.getElementById('chatbotInputs');
+    inputs.innerHTML = `
+        <button onclick="selectFitnessGoal('Lose Weight')">Lose Weight</button>
+        <button onclick="selectFitnessGoal('Gain Muscle')">Gain Muscle</button>
+        <button onclick="selectFitnessGoal('Maintain Fitness')">Maintain Fitness</button>
+    `;
+}
+
+function selectFitnessGoal(goal) {
+    chatbotState.goal = goal;
+    displayUserResponse(goal);
+    askWorkoutFrequency();
+}
+
+function askWorkoutFrequency() {
+    displayQuestion("How often do you plan to workout each week?");
+    const inputs = document.getElementById('chatbotInputs');
+    inputs.innerHTML = `
+        <button onclick="selectWorkoutFrequency('1-2 times')">1-2 times</button>
+        <button onclick="selectWorkoutFrequency('3-4 times')">3-4 times</button>
+        <button onclick="selectWorkoutFrequency('5 or more times')">5 or more times</button>
+    `;
+}
+
+function selectWorkoutFrequency(frequency) {
+    chatbotState.frequency = frequency;
+    displayUserResponse(frequency);
+    askDietPreference();
+}
+
+function askDietPreference() {
+    displayQuestion("Do you follow any specific diet?");
+    const inputs = document.getElementById('chatbotInputs');
+    inputs.innerHTML = `
+        <button onclick="selectDietPreference('No')">No specific diet</button>
+        <button onclick="selectDietPreference('Keto')">Keto</button>
+        <button onclick="selectDietPreference('Vegan')">Vegan</button>
+    `;
+}
+
+function selectDietPreference(diet) {
+    chatbotState.diet = diet;
+    displayUserResponse(diet);
+    askExerciseTypePreference();
+}
+
+function askExerciseTypePreference() {
+    displayQuestion("What type of exercise do you prefer?");
+    const inputs = document.getElementById('chatbotInputs');
+    inputs.innerHTML = `
+        <button onclick="selectExerciseTypePreference('Cardio')">Cardio</button>
+        <button onclick="selectExerciseTypePreference('Strength')">Strength</button>
+        <button onclick="selectExerciseTypePreference('Flexibility')">Flexibility</button>
+        <button onclick="selectExerciseTypePreference('Balanced')">Balanced</button>
+    `;
+}
+
+function selectExerciseTypePreference(exerciseType) {
+    chatbotState.exerciseType = exerciseType;
+    displayUserResponse(exerciseType);
+    evaluateFinalPlan();
+}
+
+function evaluateFinalPlan() {
+    let plan = '2 Week Plan'; // Default
+    if (chatbotState.goal === 'Gain Muscle' && chatbotState.frequency === '5 or more times') {
+        plan = '6 Week Plan';
+    } else if (chatbotState.goal === 'Lose Weight' && chatbotState.frequency === '3-4 times') {
+        plan = '4 Week Plan';
+    } else if (chatbotState.goal === 'Maintain Fitness' && chatbotState.frequency === '1-2 times') {
+        plan = '2 Week Plan';
+    }
+
+    // You can add more complex decision logic here based on diet and exerciseType.
+    // ...
+
+    displayQuestion(`Based on your choices, we recommend the ${plan}.`);
+    document.getElementById('chatbotInputs').innerHTML = ''; // Clear the inputs after the final recommendation
+}
 
 
-
-    // Start chat when user clicks "
 
 
 

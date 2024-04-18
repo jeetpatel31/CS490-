@@ -724,6 +724,46 @@ body {
 .info-div button:hover {
     background-color: #9b72aa; /* Slightly darker shade of primary color for hover effect */
 }
+
+.info-prompt {
+    position: absolute; /* Ensures the div can be freely moved across the page */
+    top: 20%; /* Moves the div towards the top of the viewport */
+    left: 20%; /* Moves the div towards the right of the viewport */
+    transform: translate(-50%, -50%); /* Centers the content within the div itself */
+    font-size: 1rem; /* Keeps the font size larger for visibility */
+    color: #000000; /* Adjust the color if needed */
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 5; /* Make sure it does not overlap anything it shouldn't */
+    pointer-events: none; /* Allows clicking through the prompt, if necessary */
+}
+
+.info-prompt span {
+    opacity: 0;
+    display: inline-block;
+    transform: translateY(20px);
+}
+
+/* Define the total time of one sequence including delays between words */
+@keyframes fadeInSequence {
+    0%, 10% { opacity: 0; transform: translateY(20px); }
+    20%, 30% { opacity: 1; transform: translateY(0); }
+    90%, 100% { opacity: 0; transform: translateY(20px); }
+}
+
+.info-prompt span:nth-child(1) { animation: fadeInSequence 6s ease infinite; }
+.info-prompt span:nth-child(2) { animation: fadeInSequence 6s ease infinite 0.5s; }
+.info-prompt span:nth-child(3) { animation: fadeInSequence 6s ease infinite 1s; }
+.info-prompt span:nth-child(4) { animation: fadeInSequence 6s ease infinite 1.5s; }
+.info-prompt span:nth-child(5) { animation: fadeInSequence 6s ease infinite 2s; }
+.info-prompt span:nth-child(6) { animation: fadeInSequence 6s ease infinite 2.5s; }
+
+
+
+
+
+
+
       
       </style>
 
@@ -744,6 +784,8 @@ body {
         <li><a href="#calories-calculator">Calories Calculator</a></li>
       </ul>
     </nav>
+
+
     
     <div class="container">
       <div id="welcome-message" class="welcome-message"></div>
@@ -812,6 +854,17 @@ body {
         <i class="fas fa-plus"></i>
       </button>
     </div>
+
+    <div id="info-prompt" class="info-prompt text-center">
+      <span>Please</span>
+      <span>click</span>
+      <span>on the</span>
+      <span>body part</span>
+      <span>for more</span>
+      <span>information</span>
+    </div>
+
+  
 
     <main>
 
