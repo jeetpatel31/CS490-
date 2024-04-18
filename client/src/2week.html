@@ -176,7 +176,7 @@ body {
   display: flex;
   border-radius: 4px;
   background-color: #373c4f;
-  left: 30%;
+  left: 10%;
   transform: translateX(-50%);
 }
         .left {
@@ -740,6 +740,21 @@ body {
     z-index: 999; /* Ensure it's above other content but below modal if necessary */
 }
 
+/* Add to your existing CSS */
+.meal-plan-sidebar {
+    position: fixed;
+    right: 0;
+    top: 50px; /* Adjust this value to align with your page structure */
+    width: 250px; /* Adjust as needed */
+    height: 100%;
+    background-color: #f0f0f0; /* Light grey background */
+    padding: 20px;
+    box-shadow: -2px 0px 5px rgba(0,0,0,0.1); /* Optional: adds shadow to the sidebar */
+    overflow-y: auto; /* Scrollable if content is too long */
+    z-index: 2; /* Adjust z-index as necessary */
+}
+
+
       
       </style>
 
@@ -750,10 +765,12 @@ body {
     <div class="sidebar">
       <h2 id="sidebarDate">Day Details</h2>
       <p id="sidebarWorkoutDetails">Workout: TBA</p>
-      <p id="sidebarMealPlanDetails">Meal Plan: TBA</p>
       <div id="sidebarVideoContainer"></div> <!-- Video will be inserted here -->
   </div>
   
+  <div class="meal-plan-sidebar">
+    <p id="sidebarMealPlanDetails">Meal Plan: TBA</p>
+  </div>
 
 
     <div id="dayDetailsModal" class="modal">
@@ -852,34 +869,7 @@ body {
 
         
         
-      <!-- SVG images comes here -->
-      <section id="body-section">
-          <!-- BODY - FRONT -->
-          <div class="fig-wrapper">
-              <figure class="fig fig-front">
-                  <!-- SVG comes here -->
-                  <object id="svg-front" class="svg" data="./body-front.svg" type="image/svg+xml"></object>
-                  <!-- SVG front END -->
 
-              </figure>
-          </div>
-
-          <!-- BODY - BACK -->
-          <div class="fig-wrapper">
-              <figure class="fig fig-back">
-                  <!-- SVG comes here -->
-                  <object id="svg-back" class="svg" data="./body-back.svg" type="image/svg+xml"></object>
-                  <!-- SVG back END -->
-              </figure>
-          </div>
-
-
-
-          
-
-          
-      </section>
-      
 
       
 
@@ -1486,7 +1476,7 @@ for (let i = 0; i < 14; i++) {
 
 // Example workout and meal plans
 const workouts = [
-  "Full Body Strength: Squats: 3 sets of 12 reps -> Push-ups: 3 sets of 12 reps -> Bent-over Rows: 3 sets of 12 reps -> Plank: 3 sets of 30 seconds",
+  "Full Body Strength:<br>Squats: 3 sets of 12 reps<br>Push-ups: 3 sets of 12 reps<br>Bent-over Rows: 3 sets of 12 reps<br>Plank: 3 sets of 30 seconds",
   "Strength: Upper body workout",
   "HIIT: 15 minutes intense cycling",
   // Add more as needed
@@ -1641,282 +1631,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-window.onload = addStyleToSvg;
 
-
-let infoDiv;
-
-function addStyleToSvg() {
-    addStyleFor("svg-front");
-    addStyleFor("svg-back");
-}
-
-function saveWorkoutToDatabase(workout) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const username = urlParams.get('username');
-
-    // Add the username to the workout object
-    workout.username = decodeURIComponent(username);
-
-    fetch('http://localhost:3001/addWorkout', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(workout),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => console.log('Workout saved:', data))
-    .catch(error => console.error('Error:', error));
-}
-
-
-
-function addWorkoutEvent(bodyPart) {
-  
-  // Use the globally selected date
-  const selectedDate = new Date(year, month, activeDay);
-  const dateString = selectedDate.toISOString().split('T')[0];
-
-  // Event title
-  const eventTitle = `Workout for ${bodyPart}`;
-
-  // Check if an event for the selected date already exists
-  let dateExists = false;
-  for (let i = 0; i < eventsArr.length; i++) {
-    if (eventsArr[i].day === selectedDate.getDate() && eventsArr[i].month === selectedDate.getMonth() + 1 && eventsArr[i].year === selectedDate.getFullYear()) {
-      dateExists = true;
-      eventsArr[i].events.push({ title: eventTitle, time: 'All Day' });
-      break;
-    }
-  }
-
-  // If no event for the selected date exists, create a new entry
-  if (!dateExists) {
-    eventsArr.push({
-      day: selectedDate.getDate(),
-      month: selectedDate.getMonth() + 1,
-      year: selectedDate.getFullYear(),
-      events: [{ title: eventTitle, time: 'All Day' }]
-    });
-  }
-
-  const workout = {
-        date: dateString, // Use the existing dateString variable
-        bodyPart: bodyPart,
-        title: `Workout for ${bodyPart}`
-    };
-    saveWorkoutToDatabase(workout);
-
-  // Update the calendar and events display
-  initCalendar();
-  updateEvents(selectedDate.getDate());
-}
-
-
-
-function addStyleFor(svgFilePrefix) {
-    let svgObject = document.getElementById(svgFilePrefix);
-    let svgDocument = svgObject.contentDocument;
-
-    if (!infoDiv) {
-      infoDiv = document.createElement('div');
-      infoDiv.classList.add('info-div');
-      infoDiv.style.display = 'none';
-
-      document.body.appendChild(infoDiv);
-  }
-
-
-    let svgElements = svgDocument.getElementsByClassName("hover");
-
-    for (let i = 0; i < svgElements.length; i++) {
-        const svgElement = svgElements[i];
-        const children = svgElement.children;
-
-        const originalColors = [];
-
-        for (let i = 0; i < children.length; i++) {
-            originalColors[i] = children[i].style.fill;
-        }
-
-        svgElement.addEventListener("mouseover", function () {
-            svgElement.style.cursor = "pointer";
-            
-            for (let i = 0; i < children.length; i++) {
-                const svgItem = children[i];
-                svgItem.style.fill = "red";
-                svgItem.style.transition = "transform 0.3s ease";
-                svgItem.style.transform = "translate(4px, -4px)";
-            }
-        });
-
-        svgElement.addEventListener("mouseout", function () {
-            svgElement.style.cursor = "default";
-        
-            for (let i = 0; i < children.length; i++) {
-                const svgItem = children[i];
-                svgItem.style.fill = originalColors[i];
-                svgItem.style.transition = "transform 0.3s ease";
-                svgItem.style.transform = "translate(0px, 0px)";
-            }
-        });
-
-        svgElement.addEventListener("click", function (event) {
-            svgElement.style.cursor = "default";
-
-            for (let i = 0; i < children.length; i++) {
-                const svgItem = children[i];
-                svgItem.style.fill = originalColors[i];
-            }
-            let bodyPartName = '';
-            
-            if (svgFilePrefix === "svg-front"){
-               if (svgElement.id === 'necks') {
-                  bodyPartName = 'Neck';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the neck</h2>
-                  <p>Here is some information about the neck...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/neck.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'chest') {
-                  bodyPartName = 'chest';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the chest</h2>
-                  <p>Here is some information about the chest...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/chest.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/chest.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-                  
-               } else if (svgElement.id === 'shoulder') {
-                  bodyPartName = 'shoulder';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Basic Exersice for Shoulders </h2>
-                  <p>Here are 3 Exersice ...</p>
-                  <p>1)FRONT SHOULDER RAISES (3 set, 10-12 reps)</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/sholder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>
-                  <p>2) SHOULDER PRESS (3 set, 10-12 reps)</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/front shoulder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>
-                  <p>3) LATERAL SHOULDER RAISES (3 set, 10-12 reps)</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/lateral shoulder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-                  
-               } else if (svgElement.id === 'arms') {
-                  bodyPartName = 'arms';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the arms</h2>
-                  <p>Here is some information about the arms...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/biceps.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'stomach') {
-                  bodyPartName = 'stomach';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the stomach</h2>
-                  <p>Here is some information about the stomach...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/abs.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'legs') {
-                  bodyPartName = 'legs';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the legs</h2>
-                  <p>Here is some information about the legs...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/legs.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               }
-            } else if (svgFilePrefix === "svg-back") {
-               if (svgElement.id === 'shoulder-back') {
-                  bodyPartName = 'shoulder-back';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back sholder</h2>
-                  <p>Here is some information about the back sholder...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/back sholder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'back-inner') {
-                  bodyPartName = 'back-inner';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back inner back</h2>
-                  <p>Here is some information about the back inner back...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/innerback.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'arms-back') {
-                  bodyPartName = 'arms-back';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back triceps</h2>
-                  <p>Here is some information about the back triceps...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/triceps.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'back-outer') {
-                  bodyPartName = 'back-outer';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back outer back</h2>
-                  <p>Here is some information about the back outer back...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/outer back.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'butt') {
-                  infoDiv.innerHTML = 'Information about the butt goes here';
-               } else if (svgElement.id === 'legs-back') {
-                  infoDiv.innerHTML = 'Information about the legs-back goes here';
-               }
-            }
-
-            infoDiv.style.display = 'block';
-            infoDiv.style.top = '50%';
-            infoDiv.style.left = '50%';
-            infoDiv.style.transform = 'translate(-50%, -50%)';
-
-            event.stopPropagation();
-        });
-    }
-
-    infoDiv.addEventListener("click", function(event) {
-      event.stopPropagation(); // Prevent click events on infoDiv from propagating
-  });
-  
-  document.addEventListener("click", function(event) {
-   if (!infoDiv.contains(event.target)) {
-       infoDiv.style.display = 'none';
-   }
-});
-
-
-
-
-  
-}
 
 
     </script>
