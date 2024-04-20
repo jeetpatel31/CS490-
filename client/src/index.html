@@ -731,7 +731,7 @@ body {
     left: 20%; /* Moves the div towards the right of the viewport */
     transform: translate(-50%, -50%); /* Centers the content within the div itself */
     font-size: 1rem; /* Keeps the font size larger for visibility */
-    color: #000000; /* Adjust the color if needed */
+    color: #ffffff; /* Adjust the color if needed */
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
     z-index: 5; /* Make sure it does not overlap anything it shouldn't */
@@ -760,7 +760,19 @@ body {
 
 
 
+.logo-container {
+  position: absolute; /* Position it over everything else */
+  top: 50%; /* Center vertically */
+  left: 55%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Offset the position by half of the image's width and height */
+  z-index: 10; /* Make sure it's above other elements */
+}
 
+
+.centered-logo {
+    max-width: 80%;  /* Ensures the image is responsive */
+    height: auto;  /* Maintains the aspect ratio */
+}
 
 
 
@@ -785,7 +797,9 @@ body {
       </ul>
     </nav>
 
-
+    <div class="logo-container">
+      <img src="1.png" alt="Company Logo" class="centered-logo">
+  </div>
     
     <div class="container">
       <div id="welcome-message" class="welcome-message"></div>
