@@ -25,7 +25,7 @@
 
       /* Common styles */
       body {
-        background: linear-gradient(to right, #3445a5 70%, #ffffff 50%);
+        background: linear-gradient(to right, #3445a5 80%, #ffffff 50%);
           color: rgb(0, 0, 0);
           font-family: Verdana, Geneva, Tahoma, sans-serif;
           margin: 0;
@@ -165,22 +165,24 @@ body {
       font-size: 1.25rem; /* Adjust font size as needed */
       box-sizing: border-box;
     }
-        .container {
-          position:relative;
-          width:600px;
-          min-height:340px;
-          margin:0 auto;
-          padding:2px;
-          color:#fff;
-          display:flex;
-          border-radius:4px;
-          margin-left: 1%;
-          background-color:#373c4f
-        }
+    
+    .container {
+  position: relative;
+  width: 400px;
+  height: 340px;
+  margin: 0 auto;
+  padding: 2px;
+  color: #fff;
+  display: flex;
+  border-radius: 4px;
+  background-color: #373c4f;
+  left: 16%;
+  transform: translateX(-50%);
+}
         .left {
           width:300%;
           margin-right: 10px;
-          padding:8px
+          padding:0px
           
         }
         .calendar {
@@ -599,14 +601,7 @@ body {
       
         /* Media query for screens larger than 768px */
       @media screen and (min-width: 650px) {
-      
-      
-          
-        main {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-        }
+
       
         .info-div {
             max-width: 25%; /* Adjust as needed for smaller screens */
@@ -626,7 +621,6 @@ body {
             display: grid;
             grid-template-columns: 0.5fr 0.5fr;
             justify-content: space-between;
-            margin-left: 60%;
         }
       
         .fig-wrapper {
@@ -725,55 +719,40 @@ body {
     background-color: #9b72aa; /* Slightly darker shade of primary color for hover effect */
 }
 
-.info-prompt {
-    position: absolute; /* Ensures the div can be freely moved across the page */
-    top: 20%; /* Moves the div towards the top of the viewport */
-    left: 20%; /* Moves the div towards the right of the viewport */
-    transform: translate(-50%, -50%); /* Centers the content within the div itself */
-    font-size: 1rem; /* Keeps the font size larger for visibility */
-    color: #ffffff; /* Adjust the color if needed */
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-    z-index: 5; /* Make sure it does not overlap anything it shouldn't */
-    pointer-events: none; /* Allows clicking through the prompt, if necessary */
+
+
+.modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4); }
+.modal-content { background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; }
+.close { color: #aaaaaa; float: right; font-size: 28px; font-weight: bold; }
+.close:hover, .close:focus { color: #000; text-decoration: none; cursor: pointer; }
+
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 10;
+    width: 250px; /* Adjust as needed */
+    height: 100%;
+    background-color: #f0f0f0; /* Light grey background */
+    padding: 20px;
+    box-shadow: 2px 0px 5px rgba(0,0,0,0.1); /* Optional: adds shadow to the sidebar */
+    overflow-y: auto; /* Scrollable if content is too long */
+    z-index: 999; /* Ensure it's above other content but below modal if necessary */
 }
 
-.info-prompt span {
-    opacity: 0;
-    display: inline-block;
-    transform: translateY(20px);
+/* Add to your existing CSS */
+.meal-plan-sidebar {
+    position: fixed;
+    right: 0;
+    top: 50px; /* Adjust this value to align with your page structure */
+    width: 250px; /* Adjust as needed */
+    height: 100%;
+    background-color: #f0f0f0; /* Light grey background */
+    padding: 20px;
+    box-shadow: -2px 0px 5px rgba(0,0,0,0.1); /* Optional: adds shadow to the sidebar */
+    overflow-y: auto; /* Scrollable if content is too long */
+    z-index: 2; /* Adjust z-index as necessary */
 }
-
-/* Define the total time of one sequence including delays between words */
-@keyframes fadeInSequence {
-    0%, 10% { opacity: 0; transform: translateY(20px); }
-    20%, 30% { opacity: 1; transform: translateY(0); }
-    90%, 100% { opacity: 0; transform: translateY(20px); }
-}
-
-.info-prompt span:nth-child(1) { animation: fadeInSequence 6s ease infinite; }
-.info-prompt span:nth-child(2) { animation: fadeInSequence 6s ease infinite 0.5s; }
-.info-prompt span:nth-child(3) { animation: fadeInSequence 6s ease infinite 1s; }
-.info-prompt span:nth-child(4) { animation: fadeInSequence 6s ease infinite 1.5s; }
-.info-prompt span:nth-child(5) { animation: fadeInSequence 6s ease infinite 2s; }
-.info-prompt span:nth-child(6) { animation: fadeInSequence 6s ease infinite 2.5s; }
-
-
-
-.logo-container {
-  position: absolute; /* Position it over everything else */
-  top: 50%; /* Center vertically */
-  left: 53%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Offset the position by half of the image's width and height */
-  z-index: 10; /* Make sure it's above other elements */
-}
-
-
-.centered-logo {
-    max-width: 80%;  /* Ensures the image is responsive */
-    height: auto;  /* Maintains the aspect ratio */
-}
-
 
 
       
@@ -782,9 +761,30 @@ body {
     <title>Calendar with Eventss</title>
   </head>
   <body>
+
+    <div class="sidebar">
+      <h2 id="sidebarDate">Day Details</h2>
+      <p id="sidebarWorkoutDetails">Workout: TBA</p>
+      <div id="sidebarVideoContainer"></div> <!-- Video will be inserted here -->
+  </div>
+  
+  <div class="meal-plan-sidebar">
+    <p id="sidebarMealPlanDetails">Meal Plan: TBA</p>
+  </div>
+
+
+    <div id="dayDetailsModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modalDate">Day Details</h2>
+        <p id="workoutDetails">Workout: TBA</p>
+        <p id="mealPlanDetails">Meal Plan: TBA</p>
+      </div>
+    </div>
+    
     <nav>
       <ul>
-        <li><a href="#home">Home</a></li>
+        <li><a href="./index.html">Home</a></li>
         <li>
           <a href="#fitness">Fitness</a>
           <!-- Dropdown Menu -->
@@ -796,10 +796,6 @@ body {
         <li><a href="#calories-calculator">Calories Calculator</a></li>
       </ul>
     </nav>
-
-    <div class="logo-container">
-      <img src="1.png" alt="Company Logo" class="centered-logo">
-  </div>
     
     <div class="container">
       <div id="welcome-message" class="welcome-message"></div>
@@ -869,49 +865,11 @@ body {
       </button>
     </div>
 
-    <div id="info-prompt" class="info-prompt text-center">
-      <span>Please</span>
-      <span>click</span>
-      <span>on the</span>
-      <span>body part</span>
-      <span>for more</span>
-      <span>information</span>
-    </div>
-
-  
-
     <main>
 
         
         
-      <!-- SVG images comes here -->
-      <section id="body-section">
-          <!-- BODY - FRONT -->
-          <div class="fig-wrapper">
-              <figure class="fig fig-front">
-                  <!-- SVG comes here -->
-                  <object id="svg-front" class="svg" data="./body-front.svg" type="image/svg+xml"></object>
-                  <!-- SVG front END -->
 
-              </figure>
-          </div>
-
-          <!-- BODY - BACK -->
-          <div class="fig-wrapper">
-              <figure class="fig fig-back">
-                  <!-- SVG comes here -->
-                  <object id="svg-back" class="svg" data="./body-back.svg" type="image/svg+xml"></object>
-                  <!-- SVG back END -->
-              </figure>
-          </div>
-
-
-
-          
-
-          
-      </section>
-      
 
       
 
@@ -1495,307 +1453,194 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Calculate the start date as today
+const startDate = new Date();
+startDate.setHours(0, 0, 0, 0); // Normalize the start date to the beginning of today
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-window.onload = addStyleToSvg;
-
-
-let infoDiv;
-
-function addStyleToSvg() {
-    addStyleFor("svg-front");
-    addStyleFor("svg-back");
-}
-
-function saveWorkoutToDatabase(workout) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const username = urlParams.get('username');
-
-    // Add the username to the workout object
-    workout.username = decodeURIComponent(username);
-
-    fetch('http://localhost:3001/addWorkout', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(workout),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => console.log('Workout saved:', data))
-    .catch(error => console.error('Error:', error));
+// Generate the two-week plan dynamically
+const twoWeekPlan = {};
+for (let i = 0; i < 14; i++) {
+  const planDate = new Date(startDate);
+  planDate.setDate(startDate.getDate() + i);
+  const dayKey = `${planDate.getDate()}/${planDate.getMonth() + 1}/${planDate.getFullYear()}`;
+  twoWeekPlan[dayKey] = {
+    meal: `Meal Plan for ${planDate.toDateString()}`,
+    workout: `Workout Plan for ${planDate.toDateString()}`
+  };
 }
 
 
 
-function addWorkoutEvent(bodyPart) {
-  // Use the globally selected date
-  const selectedDate = new Date(year, month, activeDay);
-  const dateString = selectedDate.toISOString().split('T')[0];
 
-  // Event title
-  const eventTitle = `Workout for ${bodyPart}`;
 
-  // Check if an event for the selected date already exists
-  let dateExists = false;
-  for (let i = 0; i < eventsArr.length; i++) {
-    if (eventsArr[i].day === selectedDate.getDate() && eventsArr[i].month === selectedDate.getMonth() + 1 && eventsArr[i].year === selectedDate.getFullYear()) {
-      dateExists = true;
-      eventsArr[i].events.push({ title: eventTitle, time: 'All Day' });
-      break;
+
+// Example workout and meal plans
+const workouts = [
+  "Full Body Strength:<br><br>Squats: 3 sets of 12 reps<br><br>Push-ups: 3 sets of 12 reps<br><br>Bent-over Rows: 3 sets of 12 reps<br><br>Plank: 3 sets of 30 seconds",
+  "Cardio Focus:<br><br>Running: 30 minutes at a moderate pace<br><br>Jump Rope: 5 sets of 1-minute intervals<br><br>Box Jumps: 4 sets of 15 reps<br><br>Burpees: 3 sets of 15 reps",
+  "Lower Body Strength:<br><br>Deadlifts: 4 sets of 10 reps<br><br>Lunges: 3 sets of 12 reps per leg<br><br>Calf Raises: 5 sets of 20 reps<br><br>Glute Bridges: 3 sets of 15 reps",
+  "Core Stability:<br><br>Crunches: 4 sets of 20 reps<br><br>Russian Twists: 3 sets of 15 reps per side<br><br>Leg Raises: 4 sets of 12 reps<br><br>Plank: 4 sets of 45 seconds",
+  "Upper Body Strength:<br><br>Bench Press: 3 sets of 10 reps<br><br>Overhead Press: 3 sets of 10 reps<br><br>Tricep Dips: 4 sets of 15 reps<br><br>Pull-Ups: 3 sets to failure",
+  "Flexibility and Recovery:<br><br>Yoga: 45 minutes focusing on flexibility<br><br>Foam Rolling: 15 minutes targeting all major muscle groups<br><br>Dynamic Stretching: 15 minutes of full-body stretches",
+  "HIIT and Agility:<br><br>Sprint Intervals: 10 sets of 30 seconds sprints with 1-minute rest<br><br>Agility Ladder Drills: 15 minutes of various patterns<br><br>Medicine Ball Slams: 3 sets of 15 reps<br><br>High Knees: 4 sets of 1 minute",
+
+
+];
+
+const workoutVideos = {
+    "Full Body Strength": ["vids/squats.mp4","vids/push.mp4", "vids/rows.mp4","vids/plank.mp4"],
+    "Cardio Focus": ["vids/chest.mp4", "vids/neck.mp4"],
+    "HIIT": ["path/to/hiit_video.mp4"],
+    // Add more mappings as needed
+};
+
+const meals = [
+  "<br><br>Breakfast: Greek yogurt with honey and almonds<br><br>Lunch: Grilled chicken salad with mixed greens, tomatoes, and balsamic vinaigrette<br><br>Dinner: Baked salmon with roasted asparagus and quinoa",
+  "<br><br>Breakfast: Smoothie with spinach, banana, peanut butter, and almond milk<br><br>Lunch: Turkey and avocado wrap with whole grain tortilla<br><br>Dinner: Stir-fried tofu with broccoli, bell peppers, and brown rice",
+  "<br><br>Breakfast: Oatmeal with blueberries and a dash of cinnamon<br><br>Lunch: Quinoa salad with chickpeas, cucumbers, and feta cheese<br><br>Dinner: Grilled steak with sweet potato wedges and green beans",
+  "<br><br>Breakfast: Scrambled eggs with spinach, tomatoes, and feta cheese<br><br>Lunch: Tuna salad on a bed of greens with whole grain crackers<br><br>Dinner: Spaghetti with marinara sauce and a side of steamed zucchini",
+  "<br><br>Breakfast: Whole grain toast with avocado and poached eggs<br><br>Lunch: Lentil soup with a side of whole-grain bread<br><br>Dinner: Chicken stir-fry with mixed vegetables and jasmine rice",
+  "<br><br>Breakfast: Chia seed pudding made with almond milk and topped with mango<br><br>Lunch: Roasted vegetable and hummus pita sandwich<br><br>Dinner: Pork tenderloin with a sweet chili glaze, served with roasted Brussels sprouts and couscous",
+  "<br><br>Breakfast: Cottage cheese with sliced peaches and walnuts<br><br>Lunch: Beef and barley soup with a side salad<br><br>Dinner: Lemon-herb roasted chicken with a side of roasted root vegetables and wild rice",
+
+];
+
+// Generate two-week plan from today
+function generateTwoWeekPlan() {
+  const startDate = new Date();
+  for (let i = 0; i < 14; i++) {
+    const planDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + i);
+    const day = planDate.getDate();
+    const month = planDate.getMonth() + 1; // JavaScript months are 0-indexed
+    const year = planDate.getFullYear();
+    const workoutIndex = i % workouts.length;
+    const mealIndex = i % meals.length;
+
+    const eventTitle = `Day ${i + 1}: Workout and Meal Plan`;
+    const eventDetail = `${workouts[workoutIndex]} | ${meals[mealIndex]}`;
+
+    // Check if the date already exists in eventsArr to avoid duplicates
+    let dateFound = eventsArr.find(event => event.day === day && event.month === month && event.year === year);
+    if (!dateFound) {
+      eventsArr.push({
+        day: day,
+        month: month,
+        year: year,
+        events: [{
+          title: eventTitle,
+          time: "All Day",
+          detail: eventDetail // This could be displayed in your modal or event detail view
+        }]
+      });
     }
   }
 
-  // If no event for the selected date exists, create a new entry
-  if (!dateExists) {
-    eventsArr.push({
-      day: selectedDate.getDate(),
-      month: selectedDate.getMonth() + 1,
-      year: selectedDate.getFullYear(),
-      events: [{ title: eventTitle, time: 'All Day' }]
-    });
-  }
-
-  const workout = {
-        date: dateString, // Use the existing dateString variable
-        bodyPart: bodyPart,
-        title: `Workout for ${bodyPart}`
-    };
-    saveWorkoutToDatabase(workout);
-
-  // Update the calendar and events display
+  // Ensure the calendar is updated to reflect these changes
   initCalendar();
-  updateEvents(selectedDate.getDate());
+}
+
+document.addEventListener('DOMContentLoaded', generateTwoWeekPlan);
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById('dayDetailsModal');
+  const span = document.getElementsByClassName('close')[0];
+
+  function updateSidebar(dayContent) {
+    const clickedDay = parseInt(dayContent);
+    const clickedMonth = month + 1; // Adjust for 0-indexed month
+    const clickedYear = year;
+    const eventForDay = eventsArr.find(event => event.day === clickedDay && event.month === clickedMonth && event.year === clickedYear);
+    
+    if (eventForDay) {
+        const planDetails = eventForDay.events[0]; // Assuming one event per day
+        const workoutType = planDetails.detail.split(':')[0]; // Extract the workout type (e.g., Cardio)
+        const videoUrls = workoutVideos[workoutType]; // Find the corresponding video URLs array
+        
+        document.getElementById('sidebarDate').innerHTML = `Details for ${clickedDay}/${clickedMonth}/${clickedYear}`;
+        document.getElementById('sidebarWorkoutDetails').innerHTML = 'Workout: ' + planDetails.detail.split(' | ')[0];
+        document.getElementById('sidebarMealPlanDetails').innerHTML = 'Meal Plan: ' + planDetails.detail.split(' | ')[1];
+
+        // Handle multiple videos
+        const sidebarVideoContainer = document.getElementById('sidebarVideoContainer');
+        sidebarVideoContainer.innerHTML = ''; // Clear previous videos
+        
+        if (videoUrls && videoUrls.length) {
+            videoUrls.forEach(videoUrl => {
+                sidebarVideoContainer.innerHTML += `
+                    <video width="100%" controls>
+                        <source src="${videoUrl}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                `;
+            });
+        } else {
+            sidebarVideoContainer.innerHTML = 'No video available for this workout.';
+        }
+    } else {
+        console.log('No event found for this day');
+    }
 }
 
 
 
-function addStyleFor(svgFilePrefix) {
-    let svgObject = document.getElementById(svgFilePrefix);
-    let svgDocument = svgObject.contentDocument;
 
-    if (!infoDiv) {
-      infoDiv = document.createElement('div');
-      infoDiv.classList.add('info-div');
-      infoDiv.style.display = 'none';
-
-      document.body.appendChild(infoDiv);
+  // Close the modal on <span> (x) click
+  span.onclick = function() {
+    modal.style.display = 'none';
   }
 
-
-    let svgElements = svgDocument.getElementsByClassName("hover");
-
-    for (let i = 0; i < svgElements.length; i++) {
-        const svgElement = svgElements[i];
-        const children = svgElement.children;
-
-        const originalColors = [];
-
-        for (let i = 0; i < children.length; i++) {
-            originalColors[i] = children[i].style.fill;
-        }
-
-        svgElement.addEventListener("mouseover", function () {
-            svgElement.style.cursor = "pointer";
-            
-            for (let i = 0; i < children.length; i++) {
-                const svgItem = children[i];
-                svgItem.style.fill = "red";
-                svgItem.style.transition = "transform 0.3s ease";
-                svgItem.style.transform = "translate(4px, -4px)";
-            }
-        });
-
-        svgElement.addEventListener("mouseout", function () {
-            svgElement.style.cursor = "default";
-        
-            for (let i = 0; i < children.length; i++) {
-                const svgItem = children[i];
-                svgItem.style.fill = originalColors[i];
-                svgItem.style.transition = "transform 0.3s ease";
-                svgItem.style.transform = "translate(0px, 0px)";
-            }
-        });
-
-        svgElement.addEventListener("click", function (event) {
-            svgElement.style.cursor = "default";
-
-            for (let i = 0; i < children.length; i++) {
-                const svgItem = children[i];
-                svgItem.style.fill = originalColors[i];
-            }
-            let bodyPartName = '';
-            
-            if (svgFilePrefix === "svg-front"){
-               if (svgElement.id === 'necks') {
-                  bodyPartName = 'Neck';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the neck</h2>
-                  <p>Here is some information about the neck...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/neck.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'chest') {
-                  bodyPartName = 'chest';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the chest</h2>
-                  <p>Here is some information about the chest...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/chest.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/chest.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-                  
-               } else if (svgElement.id === 'shoulder') {
-                  bodyPartName = 'shoulder';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Basic Exersice for Shoulders </h2>
-                  <p>Here are 3 Exersice ...</p>
-                  <p>1)FRONT SHOULDER RAISES (3 set, 10-12 reps)</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/sholder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>
-                  <p>2) SHOULDER PRESS (3 set, 10-12 reps)</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/front shoulder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>
-                  <p>3) LATERAL SHOULDER RAISES (3 set, 10-12 reps)</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/lateral shoulder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-                  
-               } else if (svgElement.id === 'arms') {
-                  bodyPartName = 'arms';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the arms</h2>
-                  <p>Here is some information about the arms...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/biceps.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'stomach') {
-                  bodyPartName = 'stomach';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the stomach</h2>
-                  <p>Here is some information about the stomach...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/abs.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'legs') {
-                  bodyPartName = 'legs';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the legs</h2>
-                  <p>Herse is some information about the legs...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/legs.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               }
-            } else if (svgFilePrefix === "svg-back") {
-               if (svgElement.id === 'shoulder-back') {
-                  bodyPartName = 'shoulder-back';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back sholder</h2>
-                  <p>Here is some information about the back sholder...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/back sholder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'back-inner') {
-                  bodyPartName = 'back-inner';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back inner back</h2>
-                  <p>Here is some information about the back inner back...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/innerback.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'arms-back') {
-                  bodyPartName = 'arms-back';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back triceps</h2>
-                  <p>Here is some information about the back triceps...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/triceps.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'back-outer') {
-                  bodyPartName = 'back-outer';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back outer back</h2>
-                  <p>Here is some information about the back outer back...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/outer back.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'butt') {
-                  infoDiv.innerHTML = 'Information about the butt goes here';
-               } else if (svgElement.id === 'legs-back') {
-                  infoDiv.innerHTML = 'Information about the legs-back goes here';
-               }
-            }
-
-            infoDiv.style.display = 'block';
-            infoDiv.style.top = '50%';
-            infoDiv.style.left = '50%';
-            infoDiv.style.transform = 'translate(-50%, -50%)';
-
-            event.stopPropagation();
-        });
+  // Close the modal when user clicks anywhere outside of it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
     }
+  }
 
-    infoDiv.addEventListener("click", function(event) {
-      event.stopPropagation(); // Prevent click events on infoDiv from propagating
+  // Add click listener to each day
+  document.querySelectorAll('.day, .prev-date, .next-date').forEach(function(day) {
+    day.addEventListener('click', function() {
+    // const dayContent = this.textContent || this.innerText;
+    // openModal(dayContent);
+
+    const dayContent = this.textContent || this.innerText;
+    updateSidebar(dayContent); // Call updateSidebar instead of openModal
   });
-  
-  document.addEventListener("click", function(event) {
-   if (!infoDiv.contains(event.target)) {
-       infoDiv.style.display = 'none';
-   }
+  });
 });
 
 
 
 
-  
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     </script>
