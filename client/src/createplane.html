@@ -811,6 +811,13 @@ body {
 
 
 
+/* Update to your existing .highlighted class */
+.day.highlighted {
+    background-color: rgba(179, 136, 221, 0.5); /* Using rgba for purple color with 50% opacity */
+    color: white; /* This will ensure the date text stands out */
+}
+
+
       
       </style>
 
@@ -821,13 +828,13 @@ body {
 
     <div class="workout-plans">
       <a href="./2week.html" class="workout-plan-link">
-          <div class="workout-plan">2 Week Plan</div>
+          <div class="workout-plan" id="2week-plan">2 Week Plan</div>
       </a>
       <a href="URL_FOR_4_WEEK_PLAN" class="workout-plan-link">
-          <div class="workout-plan">4 Week Plan</div>
+          <div class="workout-plan" id="4week-plan">4 Week Plan</div>
       </a>
       <a href="URL_FOR_6_WEEK_PLAN" class="workout-plan-link">
-          <div class="workout-plan">6 Week Plan</div>
+          <div class="workout-plan" id="6week-plan">6 Week Plan</div>
       </a>
   </div>
   
@@ -1618,6 +1625,49 @@ function evaluateFinalPlan() {
 
 
 
+// Update function to highlight days and show plan info
+function highlightDaysFromToday(planDays, infoText) {
+    const today = new Date();
+    const calendarDays = document.querySelectorAll('.days .day:not(.prev-date):not(.next-date)');
+    const startDate = today.getDate(); // Start highlighting from today's date
+
+    let daysHighlighted = 0; // Counter for the number of days highlighted
+    calendarDays.forEach(day => {
+        const dayDate = parseInt(day.textContent);
+        // Start highlighting from today and continue for the specified number of days
+        if (dayDate >= startDate && daysHighlighted < planDays) {
+            day.classList.add('highlighted');
+            daysHighlighted++;
+        } else if (dayDate < startDate && startDate > dayDate + (calendarDays.length - planDays)) {
+            // This condition handles the wrap-around to the next month
+            day.classList.add('highlighted');
+            daysHighlighted++;
+        } else {
+            day.classList.remove('highlighted');
+        }
+    });
+
+    // Display the plan info
+    document.getElementById('welcome-message').textContent = infoText;
+}
+
+// Function to clear highlighted days and clear info
+function clearHighlightsAndInfo() {
+    document.querySelectorAll('.days .day.highlighted').forEach(day => {
+        day.classList.remove('highlighted');
+    });
+    document.getElementById('welcome-message').textContent = '';
+}
+
+// Attach the highlightDaysFromToday function to mouse enter events for each plan
+document.getElementById('2week-plan').addEventListener('mouseenter', () => highlightDaysFromToday(14, 'Jumpstart your fitness journey with our comprehensive 2-week plan.'));
+document.getElementById('4week-plan').addEventListener('mouseenter', () => highlightDaysFromToday(28, 'Build your fitness foundation with our 4-week plan.'));
+document.getElementById('6week-plan').addEventListener('mouseenter', () => highlightDaysFromToday(42, 'Achieve your fitness goals with our intensive 6-week plan.'));
+
+// Attach the clearHighlightsAndInfo function to mouse leave events for each plan
+document.querySelectorAll('.workout-plan').forEach(plan => {
+    plan.addEventListener('mouseleave', clearHighlightsAndInfo);
+});
 
 
 
