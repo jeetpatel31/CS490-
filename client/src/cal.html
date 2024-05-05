@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Calorie Calculator</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background: linear-gradient(to right, #3445a5 70%, #ffffff 50%);
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            padding: 20px 0; /* Adjust padding as needed, added top and bottom padding */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Align items to the start (top) of the container */
+            height: 100vh;
+            margin-top: 20px; /* You can adjust this value to set the exact position */
+        }
+
+        .slider-container {
+            margin: 20px;
+            text-align: center;
+        }
+        .range-slider {
+            width: 300px;
+        }
+        .slider-label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .slider-value {
+            display: inline-block;
+            font-size: 24px;
+            margin: 5px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+
+        nav {
+  background-color: white;
+  padding: 10px;
+  text-align: center;
+  position: fixed; /* Fix the position at the top */
+  top: 0; /* Align to the top of the page */
+  left: 0; /* Align to the left */
+  width: 100%; /* Stretch across the full width of the page */
+  z-index: 1000; /* Ensure it's above other elements */
+}
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; /* Removes default margin */
+}
+
+nav ul li {
+  display: inline-block; /* Display items side by side */
+  margin-right: 20px; /* Adjust spacing between items */
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: black;
+  font-family: 'Poppins', sans-serif; /* Set font to match the rest of the site */
+  font-size: 16px; /* Adjust font size as needed */
+}
+
+nav ul li {
+  position: relative; /* Needed for absolute positioning of the dropdown */
+}
+
+/* Style for the dropdown menu */
+.dropdown {
+  display: none;
+  position: absolute;
+  background-color: white; /* Match the nav bar color */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Optional: for a dropdown shadow */
+  z-index: 1; /* Ensure it's above other content */
+}
+
+/* Display the dropdown on hover */
+nav ul li:hover .dropdown {
+  display: block;
+}
+
+/* Style for dropdown items */
+.dropdown li {
+  display: block;
+  text-align: left;
+}
+
+.dropdown li a {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: black; /* Text color */
+}
+
+/* Change background color on hover for dropdown items */
+.dropdown li a:hover {
+  background-color: #f2f2f2; /* Light grey background */
+}
+
+
+
+
+.poem-container {
+        position: fixed;
+        top: 50px;
+        right: 30px;
+        width: 300px;
+        background-color: #ffffff;
+        padding: 20px;
+     
+        color: #000;
+        text-align: left;
+    }
+    .poem-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .poem {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    .first-letter {
+        font-weight: bold;
+        font-size: larger;
+    }
+
+
+
+    .motivational-message {
+  text-align: center;
+  padding: 20px;
+  margin-top: 70px; /* Adjust the margin-top to align it below your nav bar */
+  margin-left: 60px;
+  font-family: 'Verdana', sans-serif;
+  color: white; /* Adjust color to match your design */
+  background-color: #3445a5; /* Adjust background color to match your design */
+  border-bottom: 2px solid #2b3a67; /* Optional: adds a border for visual separation */
+  max-width: calc(100% - 400px - 40px); /* Full width minus right margin and padding */
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
+
+
+
+    </style>
+</head>
+<body>
+
+
+    <nav>
+        <ul>
+          <li><a href="./index.html">Home</a></li>
+          <li>
+            <a href="#fitness">Fitness</a>
+            <!-- Dropdown Menu -->
+            <ul class="dropdown">
+              <li><a href="./createplane.html">Create a Plan</a></li>
+              <li><a href="./test.html">Starter</a></li>
+              <!-- Add more dropdown items here if needed -->
+            </ul>
+          </li>
+          <li><a href="./cal.html">Calories Calculator</a></li>
+        </ul>
+      </nav>
+
+
+
+
+      <div class="motivational-message">
+        Calories are essential as they provide the energy our bodies need to function properly, support daily activities, and maintain overall health.
+      </div>
+
+
+
+
+
+
+
+
+
+    <div class="container">
+        <h1>Calorie Calculator</h1>
+
+        <div class="slider-container">
+            <label for="ageSlider" class="slider-label">Age</label>
+            <input type="range" id="ageSlider" class="range-slider" min="15" max="100" value="50">
+            <span id="ageValue" class="slider-value">50</span> years
+        </div>
+        
+        <div class="slider-container">
+            <label for="weightSlider" class="slider-label">Weight</label>
+            <input type="range" id="weightSlider" class="range-slider" min="30" max="200" value="70">
+            <span id="weightValue" class="slider-value">70</span> kg
+        </div>
+        
+        <div class="slider-container">
+            <label for="heightSlider" class="slider-label">Height</label>
+            <input type="range" id="heightSlider" class="range-slider" min="100" max="220" value="175">
+            <span id="heightValue" class="slider-value">175</span> cm
+        </div>
+
+        <div>
+            <button onclick="calculateCalories()">Calculate Calories</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+
+    <div class="poem-container">
+        <div class="poem-title"></div>
+        <p class="poem">
+            <span class="first-letter">C</span>ontrols how much energy we obtain,<br>
+            <span class="first-letter">A</span>s all foods have a count to maintain.<br>
+            <span class="first-letter">L</span>ight meals may have fewer, it's true,<br>
+            <span class="first-letter">O</span>r indulge in a treat, if you're due.<br>
+            <span class="first-letter">R</span>emember it's balance we need,<br>
+            <span class="first-letter">I</span>n all things we drink, and we feed.<br>
+            <span class="first-letter">E</span>very choice counts, in the end, to sustain.
+        </p>
+    </div>
+
+
+
+
+
+
+
+    
+
+    <script>
+        function updateSliderValue(sliderId, valueId) {
+            var slider = document.getElementById(sliderId);
+            var output = document.getElementById(valueId);
+            output.innerHTML = slider.value; // Update the value display
+            slider.oninput = function() {
+                output.innerHTML = this.value;
+            }
+        }
+
+        function calculateCalories() {
+            var age = parseInt(document.getElementById('ageSlider').value);
+            var weight = parseInt(document.getElementById('weightSlider').value);
+            var height = parseInt(document.getElementById('heightSlider').value);
+            
+            // Example BMR calculation for a male. Modify with the correct formula as needed.
+            var bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+
+            document.getElementById('result').innerHTML = "Estimated daily calorie needs: " + Math.round(bmr * 1.2) + " calories/day";
+        }
+
+        updateSliderValue('ageSlider', 'ageValue');
+        updateSliderValue('weightSlider', 'weightValue');
+        updateSliderValue('heightSlider', 'heightValue');
+    </script>
+</body>
+</html>

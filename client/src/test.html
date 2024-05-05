@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beginner Workout Selection</title>
+    <style>
+      body {
+        background: linear-gradient(to right, #3445a5 70%, #ffffff 50%);
+          color: rgb(0, 0, 0);
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
+          margin: 0;
+          padding: 0;
+      }
+
+ 
+        .container {
+        display: flex;
+        justify-content: start; /* Align items to the start (left) */
+        flex-wrap: wrap;
+        padding: 50px;
+        gap: 50px;
+        max-width: 600px; /* Set a max-width to limit the container's size */
+        margin-left: 120px; /* This will push the container to the left */
+    }
+
+        .box {
+            width: 150px;
+            height: 150px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .box:hover {
+            transform: scale(1.05);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .close {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+
+        nav {
+  background-color: white;
+  padding: 10px;
+  text-align: center;
+  position: fixed; /* Fix the position at the top */
+  top: 0; /* Align to the top of the page */
+  left: 0; /* Align to the left */
+  width: 100%; /* Stretch across the full width of the page */
+  z-index: 1000; /* Ensure it's above other elements */
+}
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; /* Removes default margin */
+}
+
+nav ul li {
+  display: inline-block; /* Display items side by side */
+  margin-right: 20px; /* Adjust spacing between items */
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: black;
+  font-family: 'Poppins', sans-serif; /* Set font to match the rest of the site */
+  font-size: 16px; /* Adjust font size as needed */
+}
+
+nav ul li {
+  position: relative; /* Needed for absolute positioning of the dropdown */
+}
+
+/* Style for the dropdown menu */
+.dropdown {
+  display: none;
+  position: absolute;
+  background-color: white; /* Match the nav bar color */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Optional: for a dropdown shadow */
+  z-index: 1; /* Ensure it's above other content */
+}
+
+/* Display the dropdown on hover */
+nav ul li:hover .dropdown {
+  display: block;
+}
+
+/* Style for dropdown items */
+.dropdown li {
+  display: block;
+  text-align: left;
+}
+
+.dropdown li a {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: black; /* Text color */
+}
+
+/* Change background color on hover for dropdown items */
+.dropdown li a:hover {
+  background-color: #f2f2f2; /* Light grey background */
+}
+
+
+.acrostic-poem {
+  position: absolute; /* Absolute positioning relative to its nearest positioned ancestor */
+  right: 30px; /* Aligns the poem to the right */
+  top: 50px; /* Adjust this value to move the poem up */
+  width: 300px; /* Adjust width as needed */
+  font-family: 'Verdana', sans-serif;
+  color: rgb(0, 0, 0); /* Adjust the color to fit your design */
+  padding: 0 20px; /* Adjust as needed */
+}
+
+.first-letter {
+  font-weight: bold;
+  font-size: larger;
+}
+
+
+.motivational-message {
+  text-align: center;
+  padding: 20px;
+  margin-top: 70px; /* Adjust the margin-top to align it below your nav bar */
+  margin-left: 60px;
+  font-family: 'Verdana', sans-serif;
+  color: white; /* Adjust color to match your design */
+  background-color: #3445a5; /* Adjust background color to match your design */
+  border-bottom: 2px solid #2b3a67; /* Optional: adds a border for visual separation */
+  max-width: calc(100% - 400px - 40px); /* Full width minus right margin and padding */
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+
+
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+          <li><a href="./index.html">Home</a></li>
+          <li>
+            <a href="#fitness">Fitness</a>
+            <!-- Dropdown Menu -->
+            <ul class="dropdown">
+              <li><a href="./createplane.html">Create a Plan</a></li>
+              <li><a href="./test.html">Starter</a></li>
+              <!-- Add more dropdown items here if needed -->
+            </ul>
+          </li>
+          <li><a href="./cal.html">Calories Calculator</a></li>
+        </ul>
+      </nav>
+
+      <div class="motivational-message">
+        Starting from the beginning isn't a setback; it's a new starting line for your fitness journey. <br><br>This page is designed to guide you from the ground up. Select any body part for tailored <br><br>information and exercises. Start from scratch and build your way up – your pace, your <br><br>journey.
+      </div>
+
+
+
+<div class="container">
+    <div class="box" onclick="openModal('Chest')"style="background-image: url('./photo/chest.png'); background-size: cover; background-position: center;"></div>
+    <div class="box" onclick="openModal('Shoulder')"style="background-image: url('./photo/shoulder.png'); background-size: cover; background-position: center;"></div>
+    <div class="box" onclick="openModal('Back')"style="background-image: url('./photo/back.png'); background-size: cover; background-position: center;"></div>
+    <div class="box" onclick="openModal('Back')"style="background-image: url('./photo/arms.png'); background-size: cover; background-position: center;"></div>
+    <div class="box" onclick="openModal('Back')"style="background-image: url('./photo/legs.png'); background-size: cover; background-position: center;"></div>
+    <div class="box" onclick="openModal('Back')"style="background-image: url('./photo/abs.png'); background-size: cover; background-position: center;"></div>
+
+
+
+
+    <div class="acrostic-poem">
+        <p><span class="first-letter">F</span>ind your footing, steady and sure</p>
+        <p><span class="first-letter">O</span>vercome each challenge, endure</p>
+        <p><span class="first-letter">U</span>nleash potential, let each workout empower</p>
+        <p><span class="first-letter">N</span>avigate your path, hour by hour</p>
+        <p><span class="first-letter">D</span>etermination fuels your journey's pace</p>
+        <p><span class="first-letter">A</span>chievements small and large, you'll embrace</p>
+        <p><span class="first-letter">T</span>enacity is key, keep up the fight</p>
+        <p><span class="first-letter">I</span>nvest in yourself, with all your might</p>
+        <p><span class="first-letter">O</span>bstacles are just steps on the way</p>
+        <p><span class="first-letter">N</span>ever back down, seize each day</p>
+      </div>
+    <!-- Add more boxes here -->
+</div>
+
+
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle">Chest</h2>
+        <p>Details about chest workouts will go here...</p>
+
+
+        <video id="stageVideo" width="320" controls>
+            <source src="path_to_initial_video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <button onclick="completeStage()">Complete</button>
+    </div>
+</div>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<script>
+    // Data for each body part with its stages
+    const bodyPartData = {
+        'Chest': [
+        {
+            title: "Stage 1: Stretching",
+            description: "Repetition: 10-15<br>Start with slow and controlled movements. Focus on stretching your chest muscles.<br>Hold each stretch for about 15-30 seconds. Repeat for each stretch.",
+            videoSrc: "vids/stretch.mp4"
+        },
+        {
+            title: "Stage 2: Push Ups",
+            description: "Repetition: 10-15<br>Push ups help build upper body strength and core stability.<br>Start with sets that challenge you without compromising form.",
+            videoSrc: "vids/pushups.mp4"
+        },
+        {
+            title: "Stage 3: Bench Press",
+            description: "Repetition: 8-12<br>The bench press is a fundamental exercise for chest development.<br>Focus on proper form with a full range of motion to maximize muscle engagement.",
+            videoSrc: "vids/bench.mp4"
+        },
+        {
+            title: "Stage 4: Cable Fly",
+            description: "Repetition: 10-15<br>Cable flies target the inner chest muscles and help define the chest.<br>Use a controlled motion to feel the stretch and contraction of the chest muscles at each movement.",
+            videoSrc: "vids/chest.mp4"
+        }
+        ],
+
+        'Shoulder': [
+        {
+            title: "Stage 1: Shoulder Press",
+            description: "Repetition: 10-12<br>Shoulder presses help build upper body strength and shoulder stability.<br>Focus on lifting with control, avoiding locking your elbows at the top of the movement.",
+            videoSrc: "vids/shoulder_press.mp4"
+        },
+        {
+            title: "Stage 2: Lateral Raises",
+            description: "Repetition: 10-15<br>Lateral raises target the deltoid muscles, enhancing shoulder width and definition.<br>Keep your movements smooth and controlled, lifting the weights to the side up to shoulder height.",
+            videoSrc: "vids/lateral_raises.mp4"
+        },
+        {
+            title: "Stage 3: Front Raises",
+            description: "Repetition: 10-15<br>Front raises focus on the anterior deltoids and upper chest.<br>Maintain a slight bend in your elbows and raise the weights straight in front of you to shoulder height.",
+            videoSrc: "vids/front_raises.mp4"
+        },
+        {
+            title: "Stage 4: Reverse Flyes",
+            description: "Repetition: 10-12<br>Reverse flyes target the posterior deltoid and upper back muscles.<br>Perform this exercise with a focus on squeezing your shoulder blades together at the top of the movement.",
+            videoSrc: "vids/reverse_flyes.mp4"
+        }
+        ],
+
+        'Back': [
+        {
+            title: "Stage 1: Pull-Ups",
+            description: "Repetition: 5-10<br>Pull-ups are excellent for developing upper body strength, focusing on your back and biceps.<br>Start with assisted pull-ups if needed and focus on full range of motion.",
+            videoSrc: "vids/pull_ups.mp4"
+        },
+        {
+            title: "Stage 2: Bent Over Rows",
+            description: "Repetition: 10-12<br>Bent over rows strengthen the middle back and also engage the lower back and biceps.<br>Keep your back straight and pull the weight towards your lower rib cage.",
+            videoSrc: "vids/bent_over_rows.mp4"
+        },
+        {
+            title: "Stage 3: Lat Pulldowns",
+            description: "Repetition: 10-12<br>Lat pulldowns help in widening the upper back, targeting the latissimus dorsi.<br>Focus on pulling the bar down in front of you while squeezing your shoulder blades together.",
+            videoSrc: "vids/lat_pulldowns.mp4"
+        },
+        {
+            title: "Stage 4: Deadlifts",
+            description: "Repetition: 8-10<br>Deadlifts are crucial for developing overall back strength and thickness.<br>Ensure proper form to avoid injury; keep your back straight and lift with your legs and hips.",
+            videoSrc: "vids/deadlifts.mp4"
+        }
+        ],
+
+
+    };
+
+    let currentBodyPart = '';
+    let currentStage = 0;
+
+    function openModal(bodyPart) {
+      currentBodyPart = bodyPart;
+      currentStage = 0; // Reset to the first stage for the selected body part
+      updateModalWithStage();
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    function updateModalWithStage() {
+      const stageData = bodyPartData[currentBodyPart][currentStage];
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDescription = document.querySelector('.modal-content p');
+      const stageVideo = document.querySelector('.modal-content video source');
+
+      modalTitle.textContent = stageData.title;
+      modalDescription.innerHTML = stageData.description; // Use innerHTML to render new lines correctly
+      stageVideo.src = stageData.videoSrc;
+      document.getElementById('stageVideo').load();
+    }
+
+    function completeStage() {
+      currentStage++; // Advance to the next stage
+      if (currentStage < bodyPartData[currentBodyPart].length) {
+        updateModalWithStage();
+      } else {
+        alert('All stages complete for ' + currentBodyPart + '! Great job!');
+        closeModal();
+      }
+    }
+
+    // Optional: close the modal when clicking outside of it
+    window.onclick = function(event) {
+      if (event.target == document.getElementById('modal')) {
+        closeModal();
+      }
+    }
+</script>
+
+    
+    
+
+</body>
+</html>

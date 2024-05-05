@@ -157,18 +157,19 @@ body {
           background-color:#ffffff
         }
     .welcome-message {
-      width: 100%; /* Take the full width of the container */
+      width: 200%; /* Take the full width of the container */
       text-align: center; /* Center the text */
       padding: 10px 0; /* Add some padding */
       background-color: #373c4f; /* Match the calendar header background */
       color: #fff; /* Match the calendar header text color */
-      font-size: 1.25rem; /* Adjust font size as needed */
+      font-size: .9rem; /* Adjust font size as needed */
       box-sizing: border-box;
+
     }
     
     .container {
   position: relative;
-  width: 400px;
+  width: 500px;
   height: 340px;
   margin: 0 auto;
   padding: 2px;
@@ -176,13 +177,13 @@ body {
   display: flex;
   border-radius: 4px;
   background-color: #373c4f;
-  left: 30%;
+  left: 15%;
   transform: translateX(-50%);
 }
         .left {
           width:300%;
           margin-right: 10px;
-          padding:8px
+
           
         }
         .calendar {
@@ -365,6 +366,7 @@ body {
           border-left:.025em solid var(--primary-clr);
           border-radius:0
         }
+        
         .container .right {
           position:relative;
           width:40%;
@@ -718,12 +720,127 @@ body {
 .info-div button:hover {
     background-color: #9b72aa; /* Slightly darker shade of primary color for hover effect */
 }
+
+
+.workout-plans {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.workout-plan {
+    background-color: #f2f2f2;
+    margin: 10px;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-in-out;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    width: 300px;
+    height: 120px;
+}
+
+.workout-plan-link:hover .workout-plan {
+    transform: translateY(-5px);
+    background-color: #e0e0e0;
+}
+
+.workout-plan-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+
+
+
+.chatbot-container {
+    width: 30%; /* Adjust based on your preference */
+    height: 90vh; /* Similar height as the calendar for alignment */
+    position: fixed; /* Fixed position */
+    right: 0; /* Align to the right */
+    top: 50px; /* Below the navbar */
+    background-color: #f8f9fa; /* Light background for the chat */
+    border-left: 2px solid #dee2e6; /* Slight separation from the content */
+    padding: 10px;
+    box-shadow: -1px 0 5px rgba(0,0,0,0.1); /* Subtle shadow on the left edge */
+    overflow-y: auto; /* Allow scrolling */
+    z-index: 1000; /* Ensure it's above most other content */
+}
+
+.chatbot-header {
+    background-color: #007bff; /* Bootstrap primary blue */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.chatbot-messages {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.chatbot-user-response, .chatbot-bot-question {
+    margin: 5px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 80%;
+}
+
+.chatbot-bot-question {
+    align-self: flex-start;
+    background-color: #f1f1f1;
+}
+
+.chatbot-user-response {
+    align-self: flex-end;
+    background-color: #007bff;
+    color: white;
+}
+
+.chatbot-inputs {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+/* Update to your existing .highlighted class */
+.day.highlighted {
+    background-color: rgba(179, 136, 221, 0.5); /* Using rgba for purple color with 50% opacity */
+    color: white; /* This will ensure the date text stands out */
+}
+
+
       
       </style>
 
     <title>Calendar with Eventss</title>
   </head>
   <body>
+
+
+    <div class="workout-plans">
+      <a href="./2week.html" class="workout-plan-link">
+          <div class="workout-plan" id="2week-plan">2 Week Plan</div>
+      </a>
+      <a href="./4week.html" class="workout-plan-link">
+          <div class="workout-plan" id="4week-plan">4 Week Plan</div>
+      </a>
+      <a href="./6week.html" class="workout-plan-link">
+          <div class="workout-plan" id="6week-plan">6 Week Plan</div>
+      </a>
+  </div>
+  
+  
     <nav>
       <ul>
         <li><a href="./index.html">Home</a></li>
@@ -732,10 +849,11 @@ body {
           <!-- Dropdown Menu -->
           <ul class="dropdown">
             <li><a href="./createplane.html">Create a Plan</a></li>
+            <li><a href="./test.html">Starter</a></li>
             <!-- Add more dropdown items here if needed -->
           </ul>
         </li>
-        <li><a href="#calories-calculator">Calories Calculator</a></li>
+        <li><a href="./cal.html">Calories Calculator</a></li>
       </ul>
     </nav>
     
@@ -759,10 +877,7 @@ body {
           </div>
           <div class="days"></div>
           <div class="goto-today">
-            <div class="goto">
-              <input type="text" placeholder="mm/yyyy" class="date-input" />
-              <button class="goto-btn">Go</button>
-            </div>
+            
             <button class="today-btn">Today</button>
           </div>
         </div>
@@ -811,33 +926,13 @@ body {
 
         
         
-      <!-- SVG images comes here -->
-      <section id="body-section">
-          <!-- BODY - FRONT -->
-          <div class="fig-wrapper">
-              <figure class="fig fig-front">
-                  <!-- SVG comes here -->
-                  <object id="svg-front" class="svg" data="./body-front.svg" type="image/svg+xml"></object>
-                  <!-- SVG front END -->
-
-              </figure>
-          </div>
-
-          <!-- BODY - BACK -->
-          <div class="fig-wrapper">
-              <figure class="fig fig-back">
-                  <!-- SVG comes here -->
-                  <object id="svg-back" class="svg" data="./body-back.svg" type="image/svg+xml"></object>
-                  <!-- SVG back END -->
-              </figure>
-          </div>
-
-
-
-          
-
-          
-      </section>
+      <div class="chatbot-container">
+        <div class="chatbot-header">Fitness Plan Helper</div>
+        <div class="chatbot-messages" id="chatbotMessages"></div>
+        <div class="chatbot-inputs" id="chatbotInputs"></div>
+    </div>
+    
+      
       
 
       
@@ -848,882 +943,751 @@ body {
     
 
     <script >
-      const calendar = document.querySelector(".calendar"),
-  date = document.querySelector(".date"),
-  daysContainer = document.querySelector(".days"),
-  prev = document.querySelector(".prev"),
-  next = document.querySelector(".next"),
-  todayBtn = document.querySelector(".today-btn"),
-  gotoBtn = document.querySelector(".goto-btn"),
-  dateInput = document.querySelector(".date-input"),
-  eventDay = document.querySelector(".event-day"),
-  eventDate = document.querySelector(".event-date"),
-  eventsContainer = document.querySelector(".events"),
-  addEventBtn = document.querySelector(".add-event"),
-  addEventWrapper = document.querySelector(".add-event-wrapper "),
-  addEventCloseBtn = document.querySelector(".close "),
-  addEventTitle = document.querySelector(".event-name "),
-  addEventFrom = document.querySelector(".event-time-from "),
-  addEventTo = document.querySelector(".event-time-to "),
-  addEventSubmit = document.querySelector(".add-event-btn ");
+          const calendar = document.querySelector(".calendar"),
+        date = document.querySelector(".date"),
+        daysContainer = document.querySelector(".days"),
+        prev = document.querySelector(".prev"),
+        next = document.querySelector(".next"),
+        todayBtn = document.querySelector(".today-btn"),
+        gotoBtn = document.querySelector(".goto-btn"),
+        dateInput = document.querySelector(".date-input"),
+        eventDay = document.querySelector(".event-day"),
+        eventDate = document.querySelector(".event-date"),
+        eventsContainer = document.querySelector(".events"),
+        addEventBtn = document.querySelector(".add-event"),
+        addEventWrapper = document.querySelector(".add-event-wrapper "),
+        addEventCloseBtn = document.querySelector(".close "),
+        addEventTitle = document.querySelector(".event-name "),
+        addEventFrom = document.querySelector(".event-time-from "),
+        addEventTo = document.querySelector(".event-time-to "),
+        addEventSubmit = document.querySelector(".add-event-btn ");
 
-let today = new Date();
-let activeDay;
-let month = today.getMonth();
-let year = today.getFullYear();
+      let today = new Date();
+      let activeDay;
+      let month = today.getMonth();
+      let year = today.getFullYear();
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
 
-// const eventsArr = [
-//   {
-//     day: 13,
-//     month: 11,
-//     year: 2022,
-//     events: [
-//       {
-//         title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
-//         time: "10:00 AM",
-//       },
-//       {
-//         title: "Event 2",
-//         time: "11:00 AM",
-//       },
-//     ],
-//   },
-// ];
+      // const eventsArr = [
+      //   {
+      //     day: 13,
+      //     month: 11,
+      //     year: 2022,
+      //     events: [
+      //       {
+      //         title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
+      //         time: "10:00 AM",
+      //       },
+      //       {
+      //         title: "Event 2",
+      //         time: "11:00 AM",
+      //       },
+      //     ],
+      //   },
+      // ];
 
-var eventsArr = [];
-getEvents();
-console.log(eventsArr);
+      var eventsArr = [];
+      getEvents();
+      console.log(eventsArr);
 
-//function to add days in days with class day and prev-date next-date on previous month and next month days and active on today
-function initCalendar() {
-  const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
-  const prevLastDay = new Date(year, month, 0);
-  const prevDays = prevLastDay.getDate();
-  const lastDate = lastDay.getDate();
-  const day = firstDay.getDay();
-  const nextDays = 7 - lastDay.getDay() - 1;
+      //function to add days in days with class day and prev-date next-date on previous month and next month days and active on today
+      function initCalendar() {
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+        const prevLastDay = new Date(year, month, 0);
+        const prevDays = prevLastDay.getDate();
+        const lastDate = lastDay.getDate();
+        const day = firstDay.getDay();
+        const nextDays = 7 - lastDay.getDay() - 1;
 
-  date.innerHTML = months[month] + " " + year;
+        date.innerHTML = months[month] + " " + year;
 
-  let days = "";
+        let days = "";
 
-  for (let x = day; x > 0; x--) {
-    days += `<div class="day prev-date">${prevDays - x + 1}</div>`;
-  }
-
-  for (let i = 1; i <= lastDate; i++) {
-    //check if event is present on that day
-    let event = false;
-    eventsArr.forEach((eventObj) => {
-      if (
-        eventObj.day === i &&
-        eventObj.month === month + 1 &&
-        eventObj.year === year
-      ) {
-        event = true;
-      }
-    });
-    if (
-      i === new Date().getDate() &&
-      year === new Date().getFullYear() &&
-      month === new Date().getMonth()
-    ) {
-      activeDay = i;
-      getActiveDay(i);
-      updateEvents(i);
-      if (event) {
-        days += `<div class="day today active event">${i}</div>`;
-      } else {
-        days += `<div class="day today active">${i}</div>`;
-      }
-    } else {
-      if (event) {
-        days += `<div class="day event">${i}</div>`;
-      } else {
-        days += `<div class="day ">${i}</div>`;
-      }
-    }
-  }
-
-  for (let j = 1; j <= nextDays; j++) {
-    days += `<div class="day next-date">${j}</div>`;
-  }
-  daysContainer.innerHTML = days;
-  addListner();
-}
-
-//function to add month and year on prev and next button
-function prevMonth() {
-  month--;
-  if (month < 0) {
-    month = 11;
-    year--;
-  }
-  initCalendar();
-}
-
-function nextMonth() {
-  month++;
-  if (month > 11) {
-    month = 0;
-    year++;
-  }
-  initCalendar();
-}
-
-prev.addEventListener("click", prevMonth);
-next.addEventListener("click", nextMonth);
-
-initCalendar();
-
-//function to add active on day
-function addListner() {
-  const days = document.querySelectorAll(".day");
-  days.forEach((day) => {
-    day.addEventListener("click", (e) => {
-      getActiveDay(e.target.innerHTML);
-      updateEvents(Number(e.target.innerHTML));
-      activeDay = Number(e.target.innerHTML);
-      //remove active
-      days.forEach((day) => {
-        day.classList.remove("active");
-      });
-      //if clicked prev-date or next-date switch to that month
-      if (e.target.classList.contains("prev-date")) {
-        prevMonth();
-        //add active to clicked day afte month is change
-        setTimeout(() => {
-          //add active where no prev-date or next-date
-          const days = document.querySelectorAll(".day");
-          days.forEach((day) => {
-            if (
-              !day.classList.contains("prev-date") &&
-              day.innerHTML === e.target.innerHTML
-            ) {
-              day.classList.add("active");
-            }
-          });
-        }, 100);
-      } else if (e.target.classList.contains("next-date")) {
-        nextMonth();
-        //add active to clicked day afte month is changed
-        setTimeout(() => {
-          const days = document.querySelectorAll(".day");
-          days.forEach((day) => {
-            if (
-              !day.classList.contains("next-date") &&
-              day.innerHTML === e.target.innerHTML
-            ) {
-              day.classList.add("active");
-            }
-          });
-        }, 100);
-      } else {
-        e.target.classList.add("active");
-      }
-    });
-  });
-}
-
-todayBtn.addEventListener("click", () => {
-  today = new Date();
-  month = today.getMonth();
-  year = today.getFullYear();
-  initCalendar();
-});
-
-dateInput.addEventListener("input", (e) => {
-  dateInput.value = dateInput.value.replace(/[^0-9/]/g, "");
-  if (dateInput.value.length === 2) {
-    dateInput.value += "/";
-  }
-  if (dateInput.value.length > 7) {
-    dateInput.value = dateInput.value.slice(0, 7);
-  }
-  if (e.inputType === "deleteContentBackward") {
-    if (dateInput.value.length === 3) {
-      dateInput.value = dateInput.value.slice(0, 2);
-    }
-  }
-});
-
-gotoBtn.addEventListener("click", gotoDate);
-
-function gotoDate() {
-  console.log("here");
-  const dateArr = dateInput.value.split("/");
-  if (dateArr.length === 2) {
-    if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
-      month = dateArr[0] - 1;
-      year = dateArr[1];
-      initCalendar();
-      return;
-    }
-  }
-  alert("Invalid Date");
-}
-
-//function get active day day name and date and update eventday eventdate
-function getActiveDay(date) {
-  const day = new Date(year, month, date);
-  const dayName = day.toString().split(" ")[0];
-  eventDay.innerHTML = dayName;
-  eventDate.innerHTML = date + " " + months[month] + " " + year;
-}
-
-//function update events when a day is active
-function updateEvents(date) {
-  
-  let events = "";
-  eventsArr.forEach((event) => {
-    if (
-      date === event.day &&
-      month + 1 === event.month &&
-      year === event.year
-    ) {
-      event.events.forEach((event) => {
-        events += `<div class="event">
-            <div class="title">
-              <i class="fas fa-circle"></i>
-              <h3 class="event-title">${event.title}</h3>
-            </div>
-            <div class="event-time">
-              <span class="event-time">${event.time}</span>
-            </div>
-        </div>`;
-      });
-    }
-  });
-  if (events === "") {
-    events = `<div class="no-event">
-            <h3>No Events</h3>
-        </div>`;
-  }
-  eventsContainer.innerHTML = events;
-  
-  saveEvents();
-}
-
-//function to add event
-addEventBtn.addEventListener("click", () => {
-  addEventWrapper.classList.toggle("active");
-});
-
-addEventCloseBtn.addEventListener("click", () => {
-  addEventWrapper.classList.remove("active");
-});
-
-document.addEventListener("click", (e) => {
-  if (e.target !== addEventBtn && !addEventWrapper.contains(e.target)) {
-    addEventWrapper.classList.remove("active");
-  }
-});
-
-//allow 50 chars in eventtitle
-addEventTitle.addEventListener("input", (e) => {
-  addEventTitle.value = addEventTitle.value.slice(0, 60);
-});
-
-function defineProperty() {
-  var osccred = document.createElement("div");
-  osccred.style.position = "absolute";
-  osccred.style.bottom = "0";
-  osccred.style.right = "0";
-  osccred.style.fontSize = "10px";
-  osccred.style.color = "#ccc";
-  osccred.style.fontFamily = "sans-serif";
-  osccred.style.padding = "5px";
-  osccred.style.background = "#fff";
-  osccred.style.borderTopLeftRadius = "5px";
-  osccred.style.borderBottomRightRadius = "5px";
-  osccred.style.boxShadow = "0 0 5px #ccc";
-  document.body.appendChild(osccred);
-}
-
-defineProperty();
-
-//allow only time in eventtime from and to
-addEventFrom.addEventListener("input", (e) => {
-  addEventFrom.value = addEventFrom.value.replace(/[^0-9:]/g, "");
-  if (addEventFrom.value.length === 2) {
-    addEventFrom.value += ":";
-  }
-  if (addEventFrom.value.length > 5) {
-    addEventFrom.value = addEventFrom.value.slice(0, 5);
-  }
-});
-
-addEventTo.addEventListener("input", (e) => {
-  addEventTo.value = addEventTo.value.replace(/[^0-9:]/g, "");
-  if (addEventTo.value.length === 2) {
-    addEventTo.value += ":";
-  }
-  if (addEventTo.value.length > 5) {
-    addEventTo.value = addEventTo.value.slice(0, 5);
-  }
-});
-
-//function to add event to eventsArr
-addEventSubmit.addEventListener("click", () => {
-  const eventTitle = addEventTitle.value;
-  const eventTimeFrom = addEventFrom.value;
-  const eventTimeTo = addEventTo.value;
-  if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
-    alert("Please fill all the fields");
-    return;
-  }
-
-  //check correct time format 24 hour
-  const timeFromArr = eventTimeFrom.split(":");
-  const timeToArr = eventTimeTo.split(":");
-  if (
-    timeFromArr.length !== 2 ||
-    timeToArr.length !== 2 ||
-    timeFromArr[0] > 23 ||
-    timeFromArr[1] > 59 ||
-    timeToArr[0] > 23 ||
-    timeToArr[1] > 59
-  ) {
-    alert("Invalid Time Format");
-    return;
-  }
-
-  const timeFrom = convertTime(eventTimeFrom);
-  const timeTo = convertTime(eventTimeTo);
-
-  //check if event is already added
-  let eventExist = false;
-  eventsArr.forEach((event) => {
-    if (
-      event.day === activeDay &&
-      event.month === month + 1 &&
-      event.year === year
-    ) {
-      event.events.forEach((event) => {
-        if (event.title === eventTitle) {
-          eventExist = true;
+        for (let x = day; x > 0; x--) {
+          days += `<div class="day prev-date">${prevDays - x + 1}</div>`;
         }
-      });
-    }
-  });
-  if (eventExist) {
-    alert("Event already added");
-    return;
-  }
-  const newEvent = {
-    title: eventTitle,
-    time: timeFrom + " - " + timeTo,
-  };
-  console.log(newEvent);
-  console.log(activeDay);
-  let eventAdded = false;
-  if (eventsArr.length > 0) {
-    eventsArr.forEach((item) => {
-      if (
-        item.day === activeDay &&
-        item.month === month + 1 &&
-        item.year === year
-      ) {
-        item.events.push(newEvent);
-        eventAdded = true;
-      }
-    });
-  }
 
-  if (!eventAdded) {
-    eventsArr.push({
-      day: activeDay,
-      month: month + 1,
-      year: year,
-      events: [newEvent],
-    });
-  }
-
-  console.log(eventsArr);
-  addEventWrapper.classList.remove("active");
-  addEventTitle.value = "";
-  addEventFrom.value = "";
-  addEventTo.value = "";
-  updateEvents(activeDay);
-  //select active day and add event class if not added
-  const activeDayEl = document.querySelector(".day.active");
-  if (!activeDayEl.classList.contains("event")) {
-    activeDayEl.classList.add("event");
-  }
-});
-
-//function to delete event when clicked on event
-eventsContainer.addEventListener("click", (e) => {
-  if (e.target.classList.contains("event")) {
-    if (confirm("Are you sure you want to delete this event?")) {
-      const eventTitle = e.target.children[0].children[1].innerHTML;
-      eventsArr.forEach((event) => {
-        if (
-          event.day === activeDay &&
-          event.month === month + 1 &&
-          event.year === year
-        ) {
-          event.events.forEach((item, index) => {
-            if (item.title === eventTitle) {
-              event.events.splice(index, 1);
+        for (let i = 1; i <= lastDate; i++) {
+          //check if event is present on that day
+          let event = false;
+          eventsArr.forEach((eventObj) => {
+            if (
+              eventObj.day === i &&
+              eventObj.month === month + 1 &&
+              eventObj.year === year
+            ) {
+              event = true;
             }
           });
-          //if no events left in a day then remove that day from eventsArr
-          if (event.events.length === 0) {
-            eventsArr.splice(eventsArr.indexOf(event), 1);
-            //remove event class from day
-            const activeDayEl = document.querySelector(".day.active");
-            if (activeDayEl.classList.contains("event")) {
-              activeDayEl.classList.remove("event");
+          if (
+            i === new Date().getDate() &&
+            year === new Date().getFullYear() &&
+            month === new Date().getMonth()
+          ) {
+            activeDay = i;
+            getActiveDay(i);
+            updateEvents(i);
+            if (event) {
+              days += `<div class="day today active event">${i}</div>`;
+            } else {
+              days += `<div class="day today active">${i}</div>`;
+            }
+          } else {
+            if (event) {
+              days += `<div class="day event">${i}</div>`;
+            } else {
+              days += `<div class="day ">${i}</div>`;
             }
           }
         }
-      });
-      updateEvents(activeDay);
-    }
-  }
-});
 
-//function to save events in local storage
-function saveEvents() {
-  localStorage.setItem("events", JSON.stringify(eventsArr));
-}
+        for (let j = 1; j <= nextDays; j++) {
+          days += `<div class="day next-date">${j}</div>`;
+        }
+        daysContainer.innerHTML = days;
+        addListner();
+      }
 
-//function to get events from local storage
-function getEvents() {
-  //check if events are already saved in local storage then return event else nothing
-  if (localStorage.getItem("events") === null) {
-    return;
-  }
-  eventsArr.push(...JSON.parse(localStorage.getItem("events")));
-}
+      //function to add month and year on prev and next button
+      function prevMonth() {
+        month--;
+        if (month < 0) {
+          month = 11;
+          year--;
+        }
+        initCalendar();
+      }
 
-function convertTime(time) {
-  //convert time to 24 hour format
-  let timeArr = time.split(":");
-  let timeHour = timeArr[0];
-  let timeMin = timeArr[1];
-  let timeFormat = timeHour >= 12 ? "PM" : "AM";
-  timeHour = timeHour % 12 || 12;
-  time = timeHour + ":" + timeMin + " " + timeFormat;
-  return time;
-}
+      function nextMonth() {
+        month++;
+        if (month > 11) {
+          month = 0;
+          year++;
+        }
+        initCalendar();
+      }
 
-// Add this function to prevent propagation of click events
-function stopPropagationOnCalendarElements() {
-  const calendarElements = [
-    calendar,
-    daysContainer,
-    prev,
-    next,
-    todayBtn,
-    gotoBtn,
-    dateInput,
-    eventDay,
-    eventDate,
-    eventsContainer,
-    addEventBtn,
-    addEventWrapper,
-    addEventCloseBtn,
-    addEventTitle,
-    addEventFrom,
-    addEventTo,
-    addEventSubmit,
-    // Add other calendar elements here
-  ];
+      prev.addEventListener("click", prevMonth);
+      next.addEventListener("click", nextMonth);
 
-  calendarElements.forEach((element) => {
-    element.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
-  });
-}
+      initCalendar();
 
-// Call the function after initializing the calendar
-initCalendar();
-stopPropagationOnCalendarElements();
-
-
-
-
-function clearCalendarEvents() {
-    eventsArr = []; // Reset the events array
-
-    // Clear the visual representation of events on the calendar
-    const eventElements = document.querySelectorAll('.event');
-    eventElements.forEach(element => {
-        // Assuming each event is marked with a class 'event'
-        element.classList.remove('event');
-        element.classList.remove('active'); // If you use an 'active' class
-        // If there are other visual markers (like after elements), reset them too
-    });
-
-    // Clear the events container if it's used to display event details
-    if (eventsContainer) {
-        eventsContainer.innerHTML = '';
-    }
-}
-
-
-function fetchUserWorkouts() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const username = urlParams.get('username');
-
-    if (username) {
-        fetch(`http://localhost:3001/getUserWorkouts?username=${encodeURIComponent(username)}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                eventsArr = data.map(workout => {
-                    // Assuming the workout object has date, title, and bodyPart
-                    const workoutDate = new Date(workout.date);
-                    return {
-                        day: workoutDate.getDate() +1,
-                        month: workoutDate.getMonth() + 1,
-                        year: workoutDate.getFullYear(),
-                        events: [{ title: workout.title, time: 'All Day', bodyPart: workout.bodyPart }]
-                    };
+      //function to add active on day
+      function addListner() {
+        const days = document.querySelectorAll(".day");
+        days.forEach((day) => {
+          day.addEventListener("click", (e) => {
+            getActiveDay(e.target.innerHTML);
+            updateEvents(Number(e.target.innerHTML));
+            activeDay = Number(e.target.innerHTML);
+            //remove active
+            days.forEach((day) => {
+              day.classList.remove("active");
+            });
+            //if clicked prev-date or next-date switch to that month
+            if (e.target.classList.contains("prev-date")) {
+              prevMonth();
+              //add active to clicked day afte month is change
+              setTimeout(() => {
+                //add active where no prev-date or next-date
+                const days = document.querySelectorAll(".day");
+                days.forEach((day) => {
+                  if (
+                    !day.classList.contains("prev-date") &&
+                    day.innerHTML === e.target.innerHTML
+                  ) {
+                    day.classList.add("active");
+                  }
                 });
-                initCalendar();
-            })
-            .catch(error => console.error('Error fetching workouts:', error));
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  clearCalendarEvents();
-  fetchUserWorkouts();
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const username = urlParams.get('username');
-    if (username) {
-        document.getElementById('welcome-message').innerText = `Welcome back, ${decodeURIComponent(username)}`;
-    }
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-window.onload = addStyleToSvg;
-
-
-let infoDiv;
-
-function addStyleToSvg() {
-    addStyleFor("svg-front");
-    addStyleFor("svg-back");
-}
-
-function saveWorkoutToDatabase(workout) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const username = urlParams.get('username');
-
-    // Add the username to the workout object
-    workout.username = decodeURIComponent(username);
-
-    fetch('http://localhost:3001/addWorkout', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(workout),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => console.log('Workout saved:', data))
-    .catch(error => console.error('Error:', error));
-}
-
-
-
-function addWorkoutEvent(bodyPart) {
-  
-  // Use the globally selected date
-  const selectedDate = new Date(year, month, activeDay);
-  const dateString = selectedDate.toISOString().split('T')[0];
-
-  // Event title
-  const eventTitle = `Workout for ${bodyPart}`;
-
-  // Check if an event for the selected date already exists
-  let dateExists = false;
-  for (let i = 0; i < eventsArr.length; i++) {
-    if (eventsArr[i].day === selectedDate.getDate() && eventsArr[i].month === selectedDate.getMonth() + 1 && eventsArr[i].year === selectedDate.getFullYear()) {
-      dateExists = true;
-      eventsArr[i].events.push({ title: eventTitle, time: 'All Day' });
-      break;
-    }
-  }
-
-  // If no event for the selected date exists, create a new entry
-  if (!dateExists) {
-    eventsArr.push({
-      day: selectedDate.getDate(),
-      month: selectedDate.getMonth() + 1,
-      year: selectedDate.getFullYear(),
-      events: [{ title: eventTitle, time: 'All Day' }]
-    });
-  }
-
-  const workout = {
-        date: dateString, // Use the existing dateString variable
-        bodyPart: bodyPart,
-        title: `Workout for ${bodyPart}`
-    };
-    saveWorkoutToDatabase(workout);
-
-  // Update the calendar and events display
-  initCalendar();
-  updateEvents(selectedDate.getDate());
-}
-
-
-
-function addStyleFor(svgFilePrefix) {
-    let svgObject = document.getElementById(svgFilePrefix);
-    let svgDocument = svgObject.contentDocument;
-
-    if (!infoDiv) {
-      infoDiv = document.createElement('div');
-      infoDiv.classList.add('info-div');
-      infoDiv.style.display = 'none';
-
-      document.body.appendChild(infoDiv);
-  }
-
-
-    let svgElements = svgDocument.getElementsByClassName("hover");
-
-    for (let i = 0; i < svgElements.length; i++) {
-        const svgElement = svgElements[i];
-        const children = svgElement.children;
-
-        const originalColors = [];
-
-        for (let i = 0; i < children.length; i++) {
-            originalColors[i] = children[i].style.fill;
-        }
-
-        svgElement.addEventListener("mouseover", function () {
-            svgElement.style.cursor = "pointer";
-            
-            for (let i = 0; i < children.length; i++) {
-                const svgItem = children[i];
-                svgItem.style.fill = "red";
-                svgItem.style.transition = "transform 0.3s ease";
-                svgItem.style.transform = "translate(4px, -4px)";
+              }, 100);
+            } else if (e.target.classList.contains("next-date")) {
+              nextMonth();
+              //add active to clicked day afte month is changed
+              setTimeout(() => {
+                const days = document.querySelectorAll(".day");
+                days.forEach((day) => {
+                  if (
+                    !day.classList.contains("next-date") &&
+                    day.innerHTML === e.target.innerHTML
+                  ) {
+                    day.classList.add("active");
+                  }
+                });
+              }, 100);
+            } else {
+              e.target.classList.add("active");
             }
+          });
         });
+      }
 
-        svgElement.addEventListener("mouseout", function () {
-            svgElement.style.cursor = "default";
+      todayBtn.addEventListener("click", () => {
+        today = new Date();
+        month = today.getMonth();
+        year = today.getFullYear();
+        initCalendar();
+      });
+
+
+
+
+
+      function gotoDate() {
+        console.log("here");
+        const dateArr = dateInput.value.split("/");
+        if (dateArr.length === 2) {
+          if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
+            month = dateArr[0] - 1;
+            year = dateArr[1];
+            initCalendar();
+            return;
+          }
+        }
+        alert("Invalid Date");
+      }
+
+      //function get active day day name and date and update eventday eventdate
+      function getActiveDay(date) {
+        const day = new Date(year, month, date);
+        const dayName = day.toString().split(" ")[0];
+        eventDay.innerHTML = dayName;
+        eventDate.innerHTML = date + " " + months[month] + " " + year;
+      }
+
+      //function update events when a day is active
+      function updateEvents(date) {
         
-            for (let i = 0; i < children.length; i++) {
-                const svgItem = children[i];
-                svgItem.style.fill = originalColors[i];
-                svgItem.style.transition = "transform 0.3s ease";
-                svgItem.style.transform = "translate(0px, 0px)";
-            }
+        let events = "";
+        eventsArr.forEach((event) => {
+          if (
+            date === event.day &&
+            month + 1 === event.month &&
+            year === event.year
+          ) {
+            event.events.forEach((event) => {
+              events += `<div class="event">
+                  <div class="title">
+                    <i class="fas fa-circle"></i>
+                    <h3 class="event-title">${event.title}</h3>
+                  </div>
+                  <div class="event-time">
+                    <span class="event-time">${event.time}</span>
+                  </div>
+              </div>`;
+            });
+          }
         });
+        if (events === "") {
+          events = `<div class="no-event">
+                  <h3>No Events</h3>
+              </div>`;
+        }
+        eventsContainer.innerHTML = events;
+        
+        saveEvents();
+      }
 
-        svgElement.addEventListener("click", function (event) {
-            svgElement.style.cursor = "default";
+      //function to add event
+      addEventBtn.addEventListener("click", () => {
+        addEventWrapper.classList.toggle("active");
+      });
 
-            for (let i = 0; i < children.length; i++) {
-                const svgItem = children[i];
-                svgItem.style.fill = originalColors[i];
-            }
-            let bodyPartName = '';
-            
-            if (svgFilePrefix === "svg-front"){
-               if (svgElement.id === 'necks') {
-                  bodyPartName = 'Neck';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the neck</h2>
-                  <p>Here is some information about the neck...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/neck.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'chest') {
-                  bodyPartName = 'chest';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the chest</h2>
-                  <p>Here is some information about the chest...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/chest.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/chest.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-                  
-               } else if (svgElement.id === 'shoulder') {
-                  bodyPartName = 'shoulder';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Basic Exersice for Shoulders </h2>
-                  <p>Here are 3 Exersice ...</p>
-                  <p>1)FRONT SHOULDER RAISES (3 set, 10-12 reps)</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/sholder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>
-                  <p>2) SHOULDER PRESS (3 set, 10-12 reps)</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/front shoulder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>
-                  <p>3) LATERAL SHOULDER RAISES (3 set, 10-12 reps)</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/lateral shoulder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-                  
-               } else if (svgElement.id === 'arms') {
-                  bodyPartName = 'arms';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the arms</h2>
-                  <p>Here is some information about the arms...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/biceps.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'stomach') {
-                  bodyPartName = 'stomach';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the stomach</h2>
-                  <p>Here is some information about the stomach...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/abs.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'legs') {
-                  bodyPartName = 'legs';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the legs</h2>
-                  <p>Here is some information about the legs...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/legs.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               }
-            } else if (svgFilePrefix === "svg-back") {
-               if (svgElement.id === 'shoulder-back') {
-                  bodyPartName = 'shoulder-back';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back sholder</h2>
-                  <p>Here is some information about the back sholder...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/back sholder.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'back-inner') {
-                  bodyPartName = 'back-inner';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back inner back</h2>
-                  <p>Here is some information about the back inner back...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/innerback.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'arms-back') {
-                  bodyPartName = 'arms-back';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back triceps</h2>
-                  <p>Here is some information about the back triceps...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/triceps.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'back-outer') {
-                  bodyPartName = 'back-outer';
-                  infoDiv.innerHTML = `<button onclick="addWorkoutEvent('${bodyPartName}')">Add this Workout to Calendar</button>
-                  <h2>Information about the back outer back</h2>
-                  <p>Here is some information about the back outer back...</p>
-                  <video controls autoplay width="100%" height="auto">
-                     <source src="vids/outer back.mp4" type="video/mp4">
-                     Your browser does not support the video tag.
-                  </video>`;
-               } else if (svgElement.id === 'butt') {
-                  infoDiv.innerHTML = 'Information about the butt goes here';
-               } else if (svgElement.id === 'legs-back') {
-                  infoDiv.innerHTML = 'Information about the legs-back goes here';
-               }
-            }
+      addEventCloseBtn.addEventListener("click", () => {
+        addEventWrapper.classList.remove("active");
+      });
 
-            infoDiv.style.display = 'block';
-            infoDiv.style.top = '50%';
-            infoDiv.style.left = '50%';
-            infoDiv.style.transform = 'translate(-50%, -50%)';
+      document.addEventListener("click", (e) => {
+        if (e.target !== addEventBtn && !addEventWrapper.contains(e.target)) {
+          addEventWrapper.classList.remove("active");
+        }
+      });
 
-            event.stopPropagation();
+      //allow 50 chars in eventtitle
+      addEventTitle.addEventListener("input", (e) => {
+        addEventTitle.value = addEventTitle.value.slice(0, 60);
+      });
+
+      function defineProperty() {
+        var osccred = document.createElement("div");
+        osccred.style.position = "absolute";
+        osccred.style.bottom = "0";
+        osccred.style.right = "0";
+        osccred.style.fontSize = "10px";
+        osccred.style.color = "#ccc";
+        osccred.style.fontFamily = "sans-serif";
+        osccred.style.padding = "5px";
+        osccred.style.background = "#fff";
+        osccred.style.borderTopLeftRadius = "5px";
+        osccred.style.borderBottomRightRadius = "5px";
+        osccred.style.boxShadow = "0 0 5px #ccc";
+        document.body.appendChild(osccred);
+      }
+
+      defineProperty();
+
+      //allow only time in eventtime from and to
+      addEventFrom.addEventListener("input", (e) => {
+        addEventFrom.value = addEventFrom.value.replace(/[^0-9:]/g, "");
+        if (addEventFrom.value.length === 2) {
+          addEventFrom.value += ":";
+        }
+        if (addEventFrom.value.length > 5) {
+          addEventFrom.value = addEventFrom.value.slice(0, 5);
+        }
+      });
+
+      addEventTo.addEventListener("input", (e) => {
+        addEventTo.value = addEventTo.value.replace(/[^0-9:]/g, "");
+        if (addEventTo.value.length === 2) {
+          addEventTo.value += ":";
+        }
+        if (addEventTo.value.length > 5) {
+          addEventTo.value = addEventTo.value.slice(0, 5);
+        }
+      });
+
+      //function to add event to eventsArr
+      addEventSubmit.addEventListener("click", () => {
+        const eventTitle = addEventTitle.value;
+        const eventTimeFrom = addEventFrom.value;
+        const eventTimeTo = addEventTo.value;
+        if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
+          alert("Please fill all the fields");
+          return;
+        }
+
+        //check correct time format 24 hour
+        const timeFromArr = eventTimeFrom.split(":");
+        const timeToArr = eventTimeTo.split(":");
+        if (
+          timeFromArr.length !== 2 ||
+          timeToArr.length !== 2 ||
+          timeFromArr[0] > 23 ||
+          timeFromArr[1] > 59 ||
+          timeToArr[0] > 23 ||
+          timeToArr[1] > 59
+        ) {
+          alert("Invalid Time Format");
+          return;
+        }
+
+        const timeFrom = convertTime(eventTimeFrom);
+        const timeTo = convertTime(eventTimeTo);
+
+        //check if event is already added
+        let eventExist = false;
+        eventsArr.forEach((event) => {
+          if (
+            event.day === activeDay &&
+            event.month === month + 1 &&
+            event.year === year
+          ) {
+            event.events.forEach((event) => {
+              if (event.title === eventTitle) {
+                eventExist = true;
+              }
+            });
+          }
         });
+        if (eventExist) {
+          alert("Event already added");
+          return;
+        }
+        const newEvent = {
+          title: eventTitle,
+          time: timeFrom + " - " + timeTo,
+        };
+        console.log(newEvent);
+        console.log(activeDay);
+        let eventAdded = false;
+        if (eventsArr.length > 0) {
+          eventsArr.forEach((item) => {
+            if (
+              item.day === activeDay &&
+              item.month === month + 1 &&
+              item.year === year
+            ) {
+              item.events.push(newEvent);
+              eventAdded = true;
+            }
+          });
+        }
+
+        if (!eventAdded) {
+          eventsArr.push({
+            day: activeDay,
+            month: month + 1,
+            year: year,
+            events: [newEvent],
+          });
+        }
+
+        console.log(eventsArr);
+        addEventWrapper.classList.remove("active");
+        addEventTitle.value = "";
+        addEventFrom.value = "";
+        addEventTo.value = "";
+        updateEvents(activeDay);
+        //select active day and add event class if not added
+        const activeDayEl = document.querySelector(".day.active");
+        if (!activeDayEl.classList.contains("event")) {
+          activeDayEl.classList.add("event");
+        }
+      });
+
+      //function to delete event when clicked on event
+      eventsContainer.addEventListener("click", (e) => {
+        if (e.target.classList.contains("event")) {
+          if (confirm("Are you sure you want to delete this event?")) {
+            const eventTitle = e.target.children[0].children[1].innerHTML;
+            eventsArr.forEach((event) => {
+              if (
+                event.day === activeDay &&
+                event.month === month + 1 &&
+                event.year === year
+              ) {
+                event.events.forEach((item, index) => {
+                  if (item.title === eventTitle) {
+                    event.events.splice(index, 1);
+                  }
+                });
+                //if no events left in a day then remove that day from eventsArr
+                if (event.events.length === 0) {
+                  eventsArr.splice(eventsArr.indexOf(event), 1);
+                  //remove event class from day
+                  const activeDayEl = document.querySelector(".day.active");
+                  if (activeDayEl.classList.contains("event")) {
+                    activeDayEl.classList.remove("event");
+                  }
+                }
+              }
+            });
+            updateEvents(activeDay);
+          }
+        }
+      });
+
+      //function to save events in local storage
+      function saveEvents() {
+        localStorage.setItem("events", JSON.stringify(eventsArr));
+      }
+
+      //function to get events from local storage
+      function getEvents() {
+        //check if events are already saved in local storage then return event else nothing
+        if (localStorage.getItem("events") === null) {
+          return;
+        }
+        eventsArr.push(...JSON.parse(localStorage.getItem("events")));
+      }
+
+      function convertTime(time) {
+        //convert time to 24 hour format
+        let timeArr = time.split(":");
+        let timeHour = timeArr[0];
+        let timeMin = timeArr[1];
+        let timeFormat = timeHour >= 12 ? "PM" : "AM";
+        timeHour = timeHour % 12 || 12;
+        time = timeHour + ":" + timeMin + " " + timeFormat;
+        return time;
+      }
+
+      // Add this function to prevent propagation of click events
+      function stopPropagationOnCalendarElements() {
+        const calendarElements = [
+          calendar,
+          daysContainer,
+          prev,
+          next,
+          todayBtn,
+          gotoBtn,
+          dateInput,
+          eventDay,
+          eventDate,
+          eventsContainer,
+          addEventBtn,
+          addEventWrapper,
+          addEventCloseBtn,
+          addEventTitle,
+          addEventFrom,
+          addEventTo,
+          addEventSubmit,
+          // Add other calendar elements here
+        ];
+
+
+      }
+
+      // Call the function after initializing the calendar
+      initCalendar();
+      stopPropagationOnCalendarElements();
+
+
+
+
+      function clearCalendarEvents() {
+          eventsArr = []; // Reset the events array
+
+          // Clear the visual representation of events on the calendar
+          const eventElements = document.querySelectorAll('.event');
+          eventElements.forEach(element => {
+              // Assuming each event is marked with a class 'event'
+              element.classList.remove('event');
+              element.classList.remove('active'); // If you use an 'active' class
+              // If there are other visual markers (like after elements), reset them too
+          });
+
+          // Clear the events container if it's used to display event details
+          if (eventsContainer) {
+              eventsContainer.innerHTML = '';
+          }
+      }
+
+
+      function fetchUserWorkouts() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const username = urlParams.get('username');
+
+          if (username) {
+              fetch(`http://localhost:3001/getUserWorkouts?username=${encodeURIComponent(username)}`)
+                  .then(response => {
+                      if (!response.ok) {
+                          throw new Error(`HTTP error! Status: ${response.status}`);
+                      }
+                      return response.json();
+                  })
+                  .then(data => {
+                      eventsArr = data.map(workout => {
+                          // Assuming the workout object has date, title, and bodyPart
+                          const workoutDate = new Date(workout.date);
+                          return {
+                              day: workoutDate.getDate() +1,
+                              month: workoutDate.getMonth() + 1,
+                              year: workoutDate.getFullYear(),
+                              events: [{ title: workout.title, time: 'All Day', bodyPart: workout.bodyPart }]
+                          };
+                      });
+                      initCalendar();
+                  })
+                  .catch(error => console.error('Error fetching workouts:', error));
+          }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+          initCalendar();
+          stopPropagationOnCalendarElements();
+          clearCalendarEvents();
+          fetchUserWorkouts();
+          initChatbot();
+
+          const urlParams = new URLSearchParams(window.location.search);
+          const username = urlParams.get('username');
+          if (username) {
+              document.getElementById('welcome-message').innerText = `Welcome back, ${decodeURIComponent(username)}`;
+          }
+      });
+
+
+
+
+
+
+
+
+
+    let chatbotState = {
+    currentStep: 'askFitnessGoal',
+    goal: null,
+    frequency: null,
+    diet: null,
+    exerciseType: null
+};
+
+function initChatbot() {
+    askFitnessGoal();
+}
+
+function displayQuestion(question) {
+    const messages = document.getElementById('chatbotMessages');
+    const questionDiv = document.createElement('div');
+    questionDiv.classList.add('chatbot-bot-question');
+    questionDiv.textContent = question;
+    messages.appendChild(questionDiv);
+}
+
+function displayUserResponse(response) {
+    const messages = document.getElementById('chatbotMessages');
+    const responseDiv = document.createElement('div');
+    responseDiv.classList.add('chatbot-user-response');
+    responseDiv.textContent = response;
+    messages.appendChild(responseDiv);
+}
+
+function askFitnessGoal() {
+    displayQuestion("What is your main fitness goal?");
+    const inputs = document.getElementById('chatbotInputs');
+    inputs.innerHTML = `
+        <button onclick="selectFitnessGoal('Lose Weight')">Lose Weight</button>
+        <button onclick="selectFitnessGoal('Gain Muscle')">Gain Muscle</button>
+        <button onclick="selectFitnessGoal('Maintain Fitness')">Maintain Fitness</button>
+    `;
+}
+
+function selectFitnessGoal(goal) {
+    chatbotState.goal = goal;
+    displayUserResponse(goal);
+    askWorkoutFrequency();
+}
+
+function askWorkoutFrequency() {
+    displayQuestion("How often do you plan to workout each week?");
+    const inputs = document.getElementById('chatbotInputs');
+    inputs.innerHTML = `
+        <button onclick="selectWorkoutFrequency('1-2 times')">1-2 times</button>
+        <button onclick="selectWorkoutFrequency('3-4 times')">3-4 times</button>
+        <button onclick="selectWorkoutFrequency('5 or more times')">5 or more times</button>
+    `;
+}
+
+function selectWorkoutFrequency(frequency) {
+    chatbotState.frequency = frequency;
+    displayUserResponse(frequency);
+    askDietPreference();
+}
+
+function askDietPreference() {
+    displayQuestion("Do you follow any specific diet?");
+    const inputs = document.getElementById('chatbotInputs');
+    inputs.innerHTML = `
+        <button onclick="selectDietPreference('No')">No specific diet</button>
+        <button onclick="selectDietPreference('Keto')">Keto</button>
+        <button onclick="selectDietPreference('Vegan')">Vegan</button>
+    `;
+}
+
+function selectDietPreference(diet) {
+    chatbotState.diet = diet;
+    displayUserResponse(diet);
+    askExerciseTypePreference();
+}
+
+function askExerciseTypePreference() {
+    displayQuestion("What type of exercise do you prefer?");
+    const inputs = document.getElementById('chatbotInputs');
+    inputs.innerHTML = `
+        <button onclick="selectExerciseTypePreference('Cardio')">Cardio</button>
+        <button onclick="selectExerciseTypePreference('Strength')">Strength</button>
+        <button onclick="selectExerciseTypePreference('Flexibility')">Flexibility</button>
+        <button onclick="selectExerciseTypePreference('Balanced')">Balanced</button>
+    `;
+}
+
+function selectExerciseTypePreference(exerciseType) {
+    chatbotState.exerciseType = exerciseType;
+    displayUserResponse(exerciseType);
+    evaluateFinalPlan();
+}
+
+function evaluateFinalPlan() {
+    let plan = '2 Week Plan'; // Default
+    if (chatbotState.goal === 'Gain Muscle' && chatbotState.frequency === '5 or more times') {
+        plan = '6 Week Plan';
+    } else if (chatbotState.goal === 'Lose Weight' && chatbotState.frequency === '3-4 times') {
+        plan = '4 Week Plan';
+    } else if (chatbotState.goal === 'Maintain Fitness' && chatbotState.frequency === '1-2 times') {
+        plan = '2 Week Plan';
     }
 
-    infoDiv.addEventListener("click", function(event) {
-      event.stopPropagation(); // Prevent click events on infoDiv from propagating
-  });
-  
-  document.addEventListener("click", function(event) {
-   if (!infoDiv.contains(event.target)) {
-       infoDiv.style.display = 'none';
-   }
+    // You can add more complex decision logic here based on diet and exerciseType.
+    // ...
+
+    displayQuestion(`Based on your choices, we recommend the ${plan}.`);
+    document.getElementById('chatbotInputs').innerHTML = ''; // Clear the inputs after the final recommendation
+}
+
+
+
+
+
+
+
+
+
+// Update function to highlight days and show plan info using innerHTML
+function highlightDaysFromToday(planDays, infoText) {
+    const today = new Date();
+    const calendarDays = document.querySelectorAll('.days .day:not(.prev-date):not(.next-date)');
+    const startDate = today.getDate(); // Start highlighting from today's date
+
+    let daysHighlighted = 0; // Counter for the number of days highlighted
+    calendarDays.forEach(day => {
+        const dayDate = parseInt(day.textContent);
+        // Start highlighting from today and continue for the specified number of days
+        if (dayDate >= startDate && daysHighlighted < planDays) {
+            day.classList.add('highlighted');
+            daysHighlighted++;
+        } else if (dayDate < startDate && startDate > dayDate + (calendarDays.length - planDays)) {
+            // This condition handles the wrap-around to the next month
+            day.classList.add('highlighted');
+            daysHighlighted++;
+        } else {
+            day.classList.remove('highlighted');
+        }
+    });
+
+    // Display the plan info, use innerHTML to interpret the HTML tags
+    document.getElementById('welcome-message').innerHTML = infoText;
+}
+
+// Function to clear highlighted days and clear info, updated to use innerHTML for consistency
+function clearHighlightsAndInfo() {
+    document.querySelectorAll('.days .day.highlighted').forEach(day => {
+        day.classList.remove('highlighted');
+    });
+    document.getElementById('welcome-message').innerHTML = ''; // Use innerHTML here as well
+}
+
+// Attach the highlightDaysFromToday function to mouse enter events for each plan with enhanced descriptions
+document.getElementById('2week-plan').addEventListener('mouseenter', () => {
+    highlightDaysFromToday(14, 'Jumpstart your fitness journey with our 2-week plan.<br><br>Intensity: 4/10<br>Effort Level: Low<br>Time Commitment: 30 minutes/day<br>Sessions per Week: 3<br><br>Focus on basic exercises to increase stamina and learn fundamental fitness techniques.');
+});
+document.getElementById('4week-plan').addEventListener('mouseenter', () => {
+    highlightDaysFromToday(28, 'Build your fitness foundation with our 4-week plan.<br><br>Intensity: 6/10<br>Effort Level: Moderate<br>Time Commitment: 45 minutes/day<br>Sessions per Week: 4<br><br>Includes more varied exercises, targeting strength building and cardiovascular improvement.');
+});
+document.getElementById('6week-plan').addEventListener('mouseenter', () => {
+    highlightDaysFromToday(42, 'Achieve your fitness goals with our intensive 6-week plan.<br><br>Intensity: 8/10<br>Effort Level: High<br>Time Commitment: 60 minutes/day<br>Sessions per Week: 5<br><br>Designed for advanced fitness levels, focusing on endurance, strength, and agility.');
+});
+
+// Attach the clearHighlightsAndInfo function to mouse leave events for each plan
+document.querySelectorAll('.workout-plan').forEach(plan => {
+    plan.addEventListener('mouseleave', clearHighlightsAndInfo);
 });
 
 
 
 
-  
-}
+
+
+
+
+
+
+
 
 
     </script>
