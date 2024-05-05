@@ -14,7 +14,7 @@ app.post('/addWorkout', (req, res) => {
     const { username, date, bodyPart, title } = req.body;
 
     HealthAndWellnessUserModel.findOneAndUpdate(
-        { name: username }, // assuming 'name' is the field in your schema
+        { name: username }, // 'name' is the field in your schema
         { $push: { workouts: { date, bodyPart, title } } },
         { new: true }
     )
