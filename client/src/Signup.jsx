@@ -76,7 +76,7 @@ function Signup() {
                   <Link to="/login" className="btn btn-default border w-100 bg-light rounded-0 text-decoration-none">
                     Login
                   </Link>
-                  <p>Or <a href="http://127.0.0.1:5501/index.html" className="text-decoration-none">explore the webpage</a> without signing up.</p>
+                  <p>Or <a href="http://127.0.0.1:5500/client/src/index.html" className="text-decoration-none">explore the webpage</a> without signing up.</p>
                 
             </div>
         </div>
