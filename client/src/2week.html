@@ -1491,18 +1491,23 @@ const workouts = [
 const workoutVideos = {
     "Full Body Strength": ["vids/squats.mp4","vids/push.mp4", "vids/rows.mp4","vids/plank.mp4"],
     "Cardio Focus": ["vids/chest.mp4", "vids/neck.mp4"],
-    "HIIT": ["path/to/hiit_video.mp4"],
+    "Lower Body Strength": ["vids/squats.mp4","vids/push.mp4", "vids/rows.mp4","vids/plank.mp4"],
+    "Core Stability": ["vids/squats.mp4","vids/push.mp4", "vids/rows.mp4","vids/plank.mp4"],
+    "Upper Body Strength": ["vids/squats.mp4","vids/push.mp4", "vids/rows.mp4","vids/plank.mp4"],
+    "Flexibility and Recovery": ["vids/squats.mp4","vids/push.mp4", "vids/rows.mp4","vids/plank.mp4"],
+    "HIIT and Agility": ["vids/squats.mp4","vids/push.mp4", "vids/rows.mp4","vids/plank.mp4"],
+
     // Add more mappings as needed
 };
 
 const meals = [
-  "<br><br>Breakfast: Greek yogurt with honey and almonds<br><br>Lunch: Grilled chicken salad with mixed greens, tomatoes, and balsamic vinaigrette<br><br>Dinner: Baked salmon with roasted asparagus and quinoa",
-  "<br><br>Breakfast: Smoothie with spinach, banana, peanut butter, and almond milk<br><br>Lunch: Turkey and avocado wrap with whole grain tortilla<br><br>Dinner: Stir-fried tofu with broccoli, bell peppers, and brown rice",
-  "<br><br>Breakfast: Oatmeal with blueberries and a dash of cinnamon<br><br>Lunch: Quinoa salad with chickpeas, cucumbers, and feta cheese<br><br>Dinner: Grilled steak with sweet potato wedges and green beans",
-  "<br><br>Breakfast: Scrambled eggs with spinach, tomatoes, and feta cheese<br><br>Lunch: Tuna salad on a bed of greens with whole grain crackers<br><br>Dinner: Spaghetti with marinara sauce and a side of steamed zucchini",
-  "<br><br>Breakfast: Whole grain toast with avocado and poached eggs<br><br>Lunch: Lentil soup with a side of whole-grain bread<br><br>Dinner: Chicken stir-fry with mixed vegetables and jasmine rice",
-  "<br><br>Breakfast: Chia seed pudding made with almond milk and topped with mango<br><br>Lunch: Roasted vegetable and hummus pita sandwich<br><br>Dinner: Pork tenderloin with a sweet chili glaze, served with roasted Brussels sprouts and couscous",
-  "<br><br>Breakfast: Cottage cheese with sliced peaches and walnuts<br><br>Lunch: Beef and barley soup with a side salad<br><br>Dinner: Lemon-herb roasted chicken with a side of roasted root vegetables and wild rice",
+  "<br><br>Breakfast: Greek yogurt with honey and almonds<br>Macros: Calories: 290, Protein: 15g, Carbs: 30g, Fat: 15g<br><br>Lunch: Grilled chicken salad with mixed greens, tomatoes, and balsamic vinaigrette<br>Macros: Calories: 350, Protein: 30g, Carbs: 12g, Fat: 20g<br><br>Dinner: Baked salmon with roasted asparagus and quinoa<br>Macros: Calories: 600, Protein: 45g, Carbs: 40g, Fat: 30g",
+  "<br><br>Breakfast: Smoothie with spinach, banana, peanut butter, and almond milk<br>Macros: Calories: 300, Protein: 10g, Carbs: 45g, Fat: 10g<br><br>Lunch: Turkey and avocado wrap with whole grain tortilla<br>Macros: Calories: 400, Protein: 25g, Carbs: 40g, Fat: 20g<br><br>Dinner: Stir-fried tofu with broccoli, bell peppers, and brown rice<br>Macros: Calories: 500, Protein: 18g, Carbs: 65g, Fat: 18g",
+  "<br><br>Breakfast: Oatmeal with blueberries and a dash of cinnamon<br>Macros: Calories: 150, Protein: 5g, Carbs: 27g, Fat: 3g<br><br>Lunch: Quinoa salad with chickpeas, cucumbers, and feta cheese<br>Macros: Calories: 420, Protein: 14g, Carbs: 55g, Fat: 18g<br><br>Dinner: Grilled steak with sweet potato wedges and green beans<br>Macros: Calories: 650, Protein: 50g, Carbs: 35g, Fat: 32g",
+  "<br><br>Breakfast: Scrambled eggs with spinach, tomatoes, and feta cheese<br>Macros: Calories: 300, Protein: 20g, Carbs: 5g, Fat: 23g<br><br>Lunch: Tuna salad on a bed of greens with whole grain crackers<br>Macros: Calories: 360, Protein: 30g, Carbs: 20g, Fat: 18g<br><br>Dinner: Spaghetti with marinara sauce and a side of steamed zucchini<br>Macros: Calories: 500, Protein: 15g, Carbs: 90g, Fat: 10g",
+  "<br><br>Breakfast: Whole grain toast with avocado and poached eggs<br>Macros: Calories: 400, Protein: 20g, Carbs: 30g, Fat: 22g<br><br>Lunch: Lentil soup with a side of whole-grain bread<br>Macros: Calories: 350, Protein: 18g, Carbs: 45g, Fat: 9g<br><br>Dinner: Chicken stir-fry with mixed vegetables and jasmine rice<br>Macros: Calories: 510, Protein: 35g, Carbs: 60g, Fat: 15g",
+  "<br><br>Breakfast: Chia seed pudding made with almond milk and topped with mango<br>Macros: Calories: 300, Protein: 5g, Carbs: 50g, Fat: 10g<br><br>Lunch: Roasted vegetable and hummus pita sandwich<br>Macros: Calories: 400, Protein: 12g, Carbs: 60g, Fat: 15g<br><br>Dinner: Pork tenderloin with a sweet chili glaze, served with roasted Brussels sprouts and couscous<br>Macros: Calories: 550, Protein: 40g, Carbs: 50g, Fat: 20g",
+  "<br><br>Breakfast: Cottage cheese with sliced peaches and walnuts<br>Macros: Calories: 200, Protein: 14g, Carbs: 20g, Fat: 8g<br><br>Lunch: Beef and barley soup with a side salad<br>Macros: Calories: 350, Protein: 25g, Carbs: 35g, Fat: 15g<br><br>Dinner: Lemon-herb roasted chicken with a side of roasted root vegetables and wild rice<br>Macros: Calories: 600, Protein: 50g, Carbs: 45g, Fat: 22g",
 
 ];
 
